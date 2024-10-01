@@ -16,8 +16,5 @@ namespace E_Commerce_Project.Models
         //<select>
         public double Quantity { get; set; }
 
-        
-
-
     }
 }
