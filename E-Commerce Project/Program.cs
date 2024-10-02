@@ -1,6 +1,4 @@
-
-
-using E_Commerce_Project.DatabaseContext;
+using Entities.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

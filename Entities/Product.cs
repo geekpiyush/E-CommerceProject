@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Entities.ENUM;
+using System.ComponentModel.DataAnnotations;
 
-namespace E_Commerce_Project.Models
+namespace Entities
 {
     public class Product
     {
@@ -11,7 +12,7 @@ namespace E_Commerce_Project.Models
 
         public double Price { get; set; }
 
-        public string ProductCategory { get; set; }
+        public string ProductCategory  { get; set; }
 
         //<select>
         public double Quantity { get; set; }

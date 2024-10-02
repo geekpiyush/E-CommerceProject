@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace E_Commerce_Project.Migrations
+namespace Entities.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -29,7 +29,7 @@ namespace E_Commerce_Project.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "ProductID", "Price", "ProductCategory", "ProductName", "Quantity" },
-                values: new object[] { new Guid("90cc9d44-14e4-48bf-92d1-4505b94e5e56"), 725.0, "TestCategory", "TestProduct", 750.0 });
+                values: new object[] { new Guid("a6dcc6f8-8707-4234-852b-67a4e6b84300"), 299.0, "Base", "TestProduct", 100.0 });
         }
 
         /// <inheritdoc />
