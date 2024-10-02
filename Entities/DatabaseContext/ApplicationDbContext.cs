@@ -1,4 +1,6 @@
 ﻿using Entities.ENUM;
+using Entities.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Entities.DatabaseContext
 {
-    public class ApplicationDbContext:DbContext
+    public class ApplicationDbContext:IdentityDbContext<ApplicationUser,ApplicationUserRole,Guid>
     {
         public ApplicationDbContext(DbContextOptions options):base(options) 
         {

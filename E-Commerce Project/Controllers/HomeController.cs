@@ -2,7 +2,7 @@
 
 namespace E_Commerce_Project.Controllers
 {
-    //[Route("[controller]/[action]")]
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         [Route("/")]

@@ -1,5 +1,58 @@
-﻿@{
+﻿@model RegisterDTO
+@{
     ViewBag.Title = "Perfume | Register";
 }
 
 <h1>Register</h1>
+
+<div>
+    Already Registered? <a asp-action="Login" asp-controller="Account">Login</a>
+
+    <form asp-controller="Account" asp-action="Register" method="post">
+        @* CustomerName *@
+        <div>
+            <label asp-for="CustomerName"></label>
+            <input asp-for="CustomerName" class="form-control" />
+            <span asp-validation-for="CustomerName" class="text-danger"></span>
+        </div>
+
+        @* Email *@
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        @* Phone *@
+        <div>
+            <label asp-for="Phone"></label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        @* Password *@
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        @* Confirm Password *@
+        <div>
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        @* Register Button *@
+        <div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+    </form>
+</div>
+
+
+    <!-- Client-Side Validation Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+

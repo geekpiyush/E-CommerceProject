@@ -11,7 +11,7 @@ namespace Entities.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+            migrationBuilder.CreateTable( 
                 name: "Products",
                 columns: table => new
                 {
