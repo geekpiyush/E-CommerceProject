@@ -1,6 +1,24 @@
 ﻿@{
     ViewBag.Title = "Perfume | Home";
+
+    List<ProductCategory> categories = new List<ProductCategory>()
+    {
+        new ProductCategory(){CategoryID=Guid.Parse("7DF5C466-4B8A-40EC-A178-AD54F4CE81B5"),CategoryName="Base"},
+        new ProductCategory(){CategoryID=Guid.Parse("8951329D-94D2-44D1-A4C0-131309EC871F"),CategoryName="Medium"},
+        new ProductCategory(){CategoryID=Guid.Parse("43C7A81B-59EE-4598-8CF2-995071685DF2"),CategoryName="High"},
+        new ProductCategory(){CategoryID=Guid.Parse("D67BD5F0-F22D-44CA-B20E-15F2A24AF4D9"),CategoryName="Ultra"}
+    };
 }
 
+
+
 <h1>Home Page</h1>
+
+<span>Banner</span>
+<partial name="_BannerPartialView"></partial>
+
+<br />
+<span>Top Category</span>
+
+@await Html.PartialAsync("_TopCategoryPartialView",categories);
 

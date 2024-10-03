@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ProductCategory>
+<div class="container" style=" border:1px solid black; height:20vh;">
+
+    <ul>
+        @foreach(var category in Model)
+        {
+            <li>
+                @category.CategoryName
+            </li>
+        }
+       
+</ul>
+</div>

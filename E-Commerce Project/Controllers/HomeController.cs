@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace E_Commerce_Project.Controllers
 {
     [Route("[controller]/[action]")]
-    [Authorize] 
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         [Route("/")]
