@@ -1,4 +1,5 @@
 ﻿using Entities.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts.DTO;
@@ -6,6 +7,7 @@ using ServiceContracts.DTO;
 namespace E_Commerce_Project.Controllers
 {
     [Route("[controller]/[action]")]
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -60,6 +62,50 @@ namespace E_Commerce_Project.Controllers
 
                 return View(registerDTO);
             }
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+
+         return View(); 
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDTO loginDTO,string? ReturnUrl)
+        {
+            // check validation error
+            if(ModelState.IsValid == false)
+            {
+
+                ViewBag.Errors = ModelState.Values.SelectMany(x => x.Errors).Select(e => e.ErrorMessage);
+                return View(loginDTO);
+            }
+
+              var result = await _signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password,isPersistent:false,lockoutOnFailure:false);
+
+            if(result.Succeeded)
+            {
+
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+            ModelState.AddModelError("Login", "Invalid Email or Password");
+
+            return View();
+
+        }
+
+
+        //Logout
+        public async Task<IActionResult> Logout()
+        {
+           await _signInManager.SignOutAsync();
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+
         }
     }
 }

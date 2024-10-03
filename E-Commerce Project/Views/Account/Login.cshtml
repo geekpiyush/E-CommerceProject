@@ -1,0 +1,39 @@
+﻿@model LoginDTO
+@{
+    ViewBag.Title = "Perfume | Login";
+}
+
+<h1>Login</h1>
+
+<div>
+    Not yet registered? <a asp-action="Register" asp-controller="Account">Register</a>
+
+    <form asp-controller="Account" asp-action="Login" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"] method="post">
+
+        @* Email *@
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+
+        @* Password *@
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        @* Register Button *@
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+</div>
+
+
+<!-- Client-Side Validation Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
