@@ -14,6 +14,7 @@ namespace Entities
 
         public string ProductCategory  { get; set; }
 
+
         //<select>
         public double Quantity { get; set; }
 
