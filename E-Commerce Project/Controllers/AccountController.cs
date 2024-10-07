@@ -98,6 +98,51 @@ namespace E_Commerce_Project.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordDTO forgetPasswordDTO)
+        {
+            if (ModelState.IsValid == false)
+            {
+
+                ViewBag.Errors = ModelState.Values.SelectMany(x => x.Errors).Select(e => e.ErrorMessage);
+                return View(forgetPasswordDTO);
+            }
+
+            var user = await _userManager.FindByEmailAsync(forgetPasswordDTO.Email);
+
+            if(user == null)
+            {
+                ModelState.AddModelError("ForgetPassword","User with this email does not exist");
+                return View(forgetPasswordDTO);
+            }
+
+            var IsOldPasswordValid = await _userManager.CheckPasswordAsync(user, forgetPasswordDTO.OldPassword);
+
+            if (IsOldPasswordValid == false)
+            {
+                ModelState.AddModelError("ForgetPassword", "Old Password is incorrect");
+
+                return View(forgetPasswordDTO);
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user,forgetPasswordDTO.OldPassword, forgetPasswordDTO.NewPassword);
+
+            if(result.Succeeded)
+            {
+                //Password Change Successful
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+
+            }
+
+            return View(forgetPasswordDTO);
+        }
 
         //Logout
         public async Task<IActionResult> Logout()
@@ -107,5 +152,7 @@ namespace E_Commerce_Project.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
+
+
     }
 }
