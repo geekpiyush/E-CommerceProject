@@ -19,7 +19,7 @@ namespace Entities
         public ProductCategory? ProductCategory  { get; set; }
 
         //<select>
-        public string Quantity { get; set; }
+        public string? Quantity { get; set; }
 
         public string? ProductImagePath { get; set; }
 
