@@ -10,8 +10,10 @@ namespace Entities
     public class ProductCategory
     {
         [Key] 
-        public Guid CategoryID { get; set; }
+        public int CategoryID { get; set; }
         public string CategoryName { get; set; }
+
+        public virtual ICollection<ProductData>? Product { get; set; }
 
     }
 }

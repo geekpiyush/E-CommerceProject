@@ -10,8 +10,5 @@ namespace Entities.Identity
     public class ApplicationUser : IdentityUser<Guid>
     {
         public string? CustomerName {  get; set; }
-
-
-
     }
 }

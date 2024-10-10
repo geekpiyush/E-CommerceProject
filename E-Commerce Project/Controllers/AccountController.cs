@@ -137,7 +137,7 @@ namespace E_Commerce_Project.Controllers
             if(result.Succeeded)
             {
                 //Password Change Successful
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index),"Home");
 
             }
 

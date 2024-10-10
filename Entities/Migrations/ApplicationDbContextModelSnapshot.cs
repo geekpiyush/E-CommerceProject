@@ -119,38 +119,135 @@ namespace Entities.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.Product", b =>
+            modelBuilder.Entity("Entities.ProductCategory", b =>
                 {
-                    b.Property<Guid>("ProductID")
+                    b.Property<int>("CategoryID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("ProductCategory", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 9001,
+                            CategoryName = "Male"
+                        },
+                        new
+                        {
+                            CategoryID = 9002,
+                            CategoryName = "Female"
+                        },
+                        new
+                        {
+                            CategoryID = 9003,
+                            CategoryName = "Luxury"
+                        });
+                });
+
+            modelBuilder.Entity("Entities.ProductData", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductID"));
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<string>("ProductCategory")
-                        .IsRequired()
+                    b.Property<string>("ProductImagePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Quantity")
-                        .HasColumnType("float");
+                    b.Property<string>("Quantity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductID");
 
-                    b.ToTable("Products", (string)null);
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("ProductData", (string)null);
 
                     b.HasData(
                         new
                         {
-                            ProductID = new Guid("a6dcc6f8-8707-4234-852b-67a4e6b84300"),
-                            Price = 299.0,
-                            ProductCategory = "Base",
-                            ProductName = "TestProduct",
-                            Quantity = 100.0
+                            ProductID = 11001,
+                            CategoryID = 9001,
+                            Price = 347.86000000000001,
+                            ProductName = "Chanel No. 5",
+                            Quantity = "250ml"
+                        },
+                        new
+                        {
+                            ProductID = 11002,
+                            CategoryID = 9002,
+                            Price = 1446.72,
+                            ProductName = "Dior Sauvage",
+                            Quantity = "150ml"
+                        },
+                        new
+                        {
+                            ProductID = 11003,
+                            CategoryID = 9002,
+                            Price = 2420.2399999999998,
+                            ProductName = "Tom Ford Black Orchid",
+                            Quantity = "200ml"
+                        },
+                        new
+                        {
+                            ProductID = 11004,
+                            CategoryID = 9003,
+                            Price = 1087.0,
+                            ProductName = "Gucci Bloom",
+                            Quantity = "100ml"
+                        },
+                        new
+                        {
+                            ProductID = 11005,
+                            CategoryID = 9002,
+                            Price = 347.86000000000001,
+                            ProductName = "Yves Saint Laurent Libre",
+                            Quantity = "250ml"
+                        },
+                        new
+                        {
+                            ProductID = 11006,
+                            CategoryID = 9001,
+                            Price = 347.86000000000001,
+                            ProductName = "Blush Suede",
+                            Quantity = "250ml"
+                        },
+                        new
+                        {
+                            ProductID = 11007,
+                            CategoryID = 9003,
+                            Price = 347.86000000000001,
+                            ProductName = "Versace Eros",
+                            Quantity = "250ml"
+                        },
+                        new
+                        {
+                            ProductID = 11008,
+                            CategoryID = 9002,
+                            Price = 347.86000000000001,
+                            ProductName = "Paco Rabanne",
+                            Quantity = "250ml"
                         });
                 });
 
@@ -257,6 +354,17 @@ namespace Entities.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Entities.ProductData", b =>
+                {
+                    b.HasOne("Entities.ProductCategory", "ProductCategory")
+                        .WithMany("Product")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategory");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Entities.Identity.ApplicationUserRole", null)
@@ -306,6 +414,11 @@ namespace Entities.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.ProductCategory", b =>
+                {
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

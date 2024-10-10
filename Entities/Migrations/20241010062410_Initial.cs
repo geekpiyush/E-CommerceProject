@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Entities.Migrations
 {
     /// <inheritdoc />
-    public partial class Identity : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,6 +51,19 @@ namespace Entities.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductCategory",
+                columns: table => new
+                {
+                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductCategory", x => x.CategoryID);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +172,54 @@ namespace Entities.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ProductData",
+                columns: table => new
+                {
+                    ProductID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryID = table.Column<int>(type: "int", nullable: false),
+                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Quantity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductData", x => x.ProductID);
+                    table.ForeignKey(
+                        name: "FK_ProductData_ProductCategory_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "ProductCategory",
+                        principalColumn: "CategoryID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductCategory",
+                columns: new[] { "CategoryID", "CategoryName" },
+                values: new object[,]
+                {
+                    { 9001, "Male" },
+                    { 9002, "Female" },
+                    { 9003, "Luxury" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductData",
+                columns: new[] { "ProductID", "CategoryID", "Price", "ProductImagePath", "ProductName", "Quantity" },
+                values: new object[,]
+                {
+                    { 11001, 9001, 347.86000000000001, null, "Chanel No. 5", "250ml" },
+                    { 11002, 9002, 1446.72, null, "Dior Sauvage", "150ml" },
+                    { 11003, 9002, 2420.2399999999998, null, "Tom Ford Black Orchid", "200ml" },
+                    { 11004, 9003, 1087.0, null, "Gucci Bloom", "100ml" },
+                    { 11005, 9002, 347.86000000000001, null, "Yves Saint Laurent Libre", "250ml" },
+                    { 11006, 9001, 347.86000000000001, null, "Blush Suede", "250ml" },
+                    { 11007, 9003, 347.86000000000001, null, "Versace Eros", "250ml" },
+                    { 11008, 9002, 347.86000000000001, null, "Paco Rabanne", "250ml" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -195,6 +258,11 @@ namespace Entities.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductData_CategoryID",
+                table: "ProductData",
+                column: "CategoryID");
         }
 
         /// <inheritdoc />
@@ -216,10 +284,16 @@ namespace Entities.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ProductData");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ProductCategory");
         }
     }
 }
