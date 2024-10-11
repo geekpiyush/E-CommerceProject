@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ProductDataResponse>
+@{
+    ViewBag.Title = "Perfume | All Products";
+}
+
+<h1>AllProduct</h1>
+<form asp-controller="Product" asp-action="GetAllProduct" method="get">
+<div class="container mt-4">
+    <form class="form-inline" asp-controller="" asp-action="" method="GET">
+        <div class="form-group mr-2">
+            <label for="searchBy" class="mr-2">Search By:</label>
+            <select class="form-control" id="searchBy" name="searchBy">
+                @foreach (var field in ViewBag.SearchFields)
+                {
+                    if(field.Key == ViewBag.CurrentSearchBy)
+                        {
+                            <option value="@field.Key" selected="selected">@field.Value</option>
+                        }
+                    else
+                        {
+                            <option value="@field.Key">@field.Value</option>
+                        }
+
+                }
+            </select>
+        </div>
+        <div class="form-group mr-2">
+            <label for="searchText" class="sr-only">Search</label>
+            <input type="text" class="form-control" id="searchString" name="searchString" value="@ViewBag.CurrentSearchString" placeholder="Enter search text">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a asp-controller="Product" asp-action="GetAllProduct">Clear Search</a>
+    </form>
+</div>
+
+
+<div class="container row mt-3">
+@foreach(ProductDataResponse product in Model)
+{
+    <div class="col-md-3">
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="~/images/BannerImage.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@product.ProductName</h5>
+            <h5 class="card-title"><i class="fa-solid fa-list"></i>@product.CategoryID</h5>
+            <p class="card-text"><i class="fa-solid fa-indian-rupee-sign"></i>@product.Price</p>
+                    <p class="card-text"><i class="fa-solid fa-weight-scale"></i>@product.Quantity</p>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Buy Now</a>
+        </div>
+    </div>
+    </div>
+}
+</div>
+</form>
