@@ -16,8 +16,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" asp-controller="Product" asp-action="GetAllProduct">Products</a>
+                    <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                    <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa-solid fa-store"></i> Product
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="productDropdown">
+                        <a class="dropdown-item" asp-controller="Product" asp-action="GetAllProduct">All Products</a>
+                        <a class="dropdown-item" asp-controller="Product" asp-action="AddProduct">Add Product</a>
+                        <a class="dropdown-item" asp-controller="Product" asp-action="Update Product">Update Product</a>
+                    </div>
+                    
+                    </div>
+         
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa-solid fa-user"></i>
