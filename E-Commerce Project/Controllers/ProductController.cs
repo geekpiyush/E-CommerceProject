@@ -14,15 +14,18 @@ namespace E_Commerce_Project.Controllers
         private readonly IProductDataGetterService _dataGetterService;
         private readonly IProductDataUpdateService _dataUpdateService;
         private readonly IProductDataDeleteService _dataDeleteService;
+        private readonly IProductCategoryGetterService _categoryService;
         private readonly ApplicationDbContext _db;
 
-        public ProductController(ApplicationDbContext db, IProductDataAddService productDataAddService, IProductDataGetterService productDataGetterService, IProductDataUpdateService productDataUpdateService, IProductDataDeleteService productDataDeleteService)
+        public ProductController(ApplicationDbContext db, IProductDataAddService productDataAddService, IProductDataGetterService productDataGetterService, IProductDataUpdateService productDataUpdateService, IProductDataDeleteService productDataDeleteService, IProductCategoryGetterService categoryService)
         {
             _dataAddService = productDataAddService;
             _dataGetterService = productDataGetterService;
             _dataUpdateService = productDataUpdateService;
             _dataDeleteService = productDataDeleteService;
+            _categoryService = categoryService;
             _db = db;
+            
         }
 
         public IActionResult GetAllProduct(string searchBy, string? searchString)
@@ -43,6 +46,32 @@ namespace E_Commerce_Project.Controllers
             ViewBag.CurrentSearchString = searchString;
 
             return View(productData);
+        }
+
+        public IActionResult AddProduct()
+        {
+            List<ProductCategoryResponse> productCategoryResponses = _categoryService.GetAllProductCategories();
+
+            ViewBag.ProductCategory = productCategoryResponses;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct(ProductDataAddRequest productDataAddRequest)
+        {
+            if(!ModelState.IsValid)
+            {
+                List<ProductCategoryResponse> productCategoryResponses = _categoryService.GetAllProductCategories();
+
+                ViewBag.ProductCategory = productCategoryResponses;
+
+                ViewBag.Errors = ModelState.Values.SelectMany(v=>v.Errors).Select(e=>e.ErrorMessage).ToList();
+
+            }
+
+            ProductDataResponse productData = _dataAddService.AddProduct(productDataAddRequest);
+
+            return RedirectToAction("GetAllProduct", "Product");
         }
     }
 }

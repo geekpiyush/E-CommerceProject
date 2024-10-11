@@ -45,6 +45,7 @@ namespace Services
             ProductData productData = productDataAddRequest.ToProductData();
 
             _db.productData.Add(productData);
+            _db.SaveChanges();
 
            return ConvertProductDataToProductDataResponse(productData);
 

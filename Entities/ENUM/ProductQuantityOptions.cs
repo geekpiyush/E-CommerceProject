@@ -8,10 +8,8 @@ namespace Entities.ENUM
 {
     public enum ProductQuantityOptions
     {
-        ml100 = 100,
-        ml150 = 150,
-        ml200 = 200,
-        ml250 = 250,
-        ml300 = 300
+      Small = 100,
+      Medium =  200,
+      Large =   300
     }
 }
