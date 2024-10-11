@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ServiceContracts;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options=>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
+
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<IProductCategoryGetterService, ProductCategoryGetterService>();
+builder.Services.AddScoped<IProductDataAddService, ProductDataAdderServie>();
+builder.Services.AddScoped<IProductDataGetterService, ProductDataGetterService>();
+builder.Services.AddScoped<IProductDataUpdateService,ProductDataUpdateService>();
+builder.Services.AddScoped<IProductDataDeleteService, ProductDataDeleteService>();
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
 {

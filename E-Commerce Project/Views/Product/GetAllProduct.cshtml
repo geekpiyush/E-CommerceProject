@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ProductDataResponse>
+@{
+    ViewBag.Title = "Perfume | All Products";
+}
+
+<h1>AllProduct</h1>
+
+<div class="row">
+@foreach(ProductDataResponse product in Model)
+{
+    <div class="col-md-3">
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="@product.ProductImagePath" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@product.ProductName</h5>
+            <h5 class="card-title"><i class="fa-solid fa-list"></i>@product.CategoryID</h5>
+            <p class="card-text"><i class="fa-solid fa-indian-rupee-sign"></i>@product.Price</p>
+                    <p class="card-text"><i class="fa-solid fa-weight-scale"></i>@product.Quantity</p>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Buy Now</a>
+        </div>
+    </div>
+    </div>
+}
+</div>
