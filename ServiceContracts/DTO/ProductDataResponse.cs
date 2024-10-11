@@ -12,16 +12,16 @@ namespace ServiceContracts.DTO
     public class ProductDataResponse
     {
     
-        public int? ProductID { get; set; }
+        public int ProductID { get; set; }
 
-        public int? CategoryID { get; set; }
-        public string? ProductName { get; set; }
+        public int CategoryID { get; set; }
+        public string ProductName { get; set; }
 
-        public double? Price { get; set; }
+        public double Price { get; set; }
 
         public string? ProductCategory { get; set; }
 
-        public string? Quantity { get; set; }
+        public string Quantity { get; set; }
 
         public string? ProductImagePath { get; set; }
 
@@ -29,6 +29,11 @@ namespace ServiceContracts.DTO
         public override string ToString()
         {
             return $"Product ID: {ProductID},CategoryID {CategoryID}, Product Name: {ProductName},Price: {Price},Quantity {Quantity}, Product Category {ProductCategory},Product Image Path {ProductImagePath}";
+        }
+
+        public ProductDataUpdateRequest ToProductUpdateRequest()
+        {
+            return new ProductDataUpdateRequest() { ProductName = ProductName, ProductImagePath = ProductImagePath, ProductID = ProductID, CategoryID = CategoryID, Quantity = Quantity, Price = Price };
         }
     }
 
