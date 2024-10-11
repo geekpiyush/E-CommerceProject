@@ -38,9 +38,6 @@ namespace Services
                     matchingProduct = allProduct.Where(temp => (!string.IsNullOrEmpty(temp.ProductName) ? temp.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
                     break;
 
-                case nameof(ProductData.CategoryID):
-                    matchingProduct = allProduct.Where(temp => (!string.IsNullOrEmpty(temp.ProductCategory) ? temp.ProductCategory.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
-                    break;
 
                 default: matchingProduct = allProduct;
                     break;

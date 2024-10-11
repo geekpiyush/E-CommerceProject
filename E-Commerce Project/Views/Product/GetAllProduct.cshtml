@@ -4,8 +4,37 @@
 }
 
 <h1>AllProduct</h1>
+<form asp-controller="Product" asp-action="GetAllProduct" method="get">
+<div class="container mt-4">
+    <form class="form-inline" asp-controller="" asp-action="" method="GET">
+        <div class="form-group mr-2">
+            <label for="searchBy" class="mr-2">Search By:</label>
+            <select class="form-control" id="searchBy" name="searchBy">
+                @foreach (var field in ViewBag.SearchFields)
+                {
+                    if(field.Key == ViewBag.CurrentSearchBy)
+                        {
+                            <option value="@field.Key" selected="selected">@field.Value</option>
+                        }
+                    else
+                        {
+                            <option value="@field.Key">@field.Value</option>
+                        }
 
-<div class="container row">
+                }
+            </select>
+        </div>
+        <div class="form-group mr-2">
+            <label for="searchText" class="sr-only">Search</label>
+            <input type="text" class="form-control" id="searchString" name="searchString" value="@ViewBag.CurrentSearchString" placeholder="Enter search text">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a asp-controller="Product" asp-action="GetAllProduct">Clear Search</a>
+    </form>
+</div>
+
+
+<div class="container row mt-3">
 @foreach(ProductDataResponse product in Model)
 {
     <div class="col-md-3">
@@ -23,3 +52,4 @@
     </div>
 }
 </div>
+</form>

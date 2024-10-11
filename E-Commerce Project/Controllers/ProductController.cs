@@ -25,9 +25,22 @@ namespace E_Commerce_Project.Controllers
             _db = db;
         }
 
-        public IActionResult GetAllProduct()
+        public IActionResult GetAllProduct(string searchBy, string? searchString)
         {
-            List<ProductDataResponse> productData = _dataGetterService.GetAllProduct();
+
+            ViewBag.SearchFields = new Dictionary<string, string>()
+            {
+                { nameof(ProductDataResponse.ProductName),"Product Name" },
+                { nameof(ProductDataResponse.ProductID),"ProductID" },
+                { nameof(ProductDataResponse.CategoryID),"CategoryID" },
+                { nameof(ProductDataResponse.Price),"Price" },
+                { nameof(ProductDataResponse.Quantity),"Quantity" }
+
+            };
+            List<ProductDataResponse> productData = _dataGetterService.GetFilterdProduct(searchBy,searchString);
+
+            ViewBag.CurrentSearchBy = searchBy;
+            ViewBag.CurrentSearchString = searchString;
 
             return View(productData);
         }
