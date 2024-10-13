@@ -42,6 +42,27 @@ namespace Services
 
             ValidationHelper.ModelValidation(productDataAddRequest);
 
+            if(productDataAddRequest.ProductImage != null && productDataAddRequest.ProductImage.Length>0)
+            {
+                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "productImages");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);  
+                }
+
+                string fileName = $"{Guid.NewGuid()}_{productDataAddRequest.ProductImage.FileName}";
+                string filePath = Path.Combine(folderPath, fileName);
+
+                using(var fileStream = new FileStream(filePath,FileMode.Create))
+                {
+                    productDataAddRequest.ProductImage.CopyTo(fileStream);
+                }
+
+                productDataAddRequest.ProductImagePath = $"/images/productImages/{fileName}";
+            }
+
+
             ProductData productData = productDataAddRequest.ToProductData();
 
             _db.productData.Add(productData);

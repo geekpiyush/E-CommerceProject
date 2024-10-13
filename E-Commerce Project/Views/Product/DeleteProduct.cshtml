@@ -1,6 +1,6 @@
-﻿@model ProductDataAddRequest
+﻿@model ProductDataResponse
 @{
-    ViewBag.Title = "Perfume | Add Product";
+    ViewBag.Title = "Perfume | Delete Product";
 }
 <style>
     input[type="text"], select {
@@ -12,46 +12,49 @@
         border-radius: 4px;
     }
 </style>
-<h2>Add Prodcut</h2>
+<h2>Delete Prodcut</h2>
 
-<form asp-controller="Product" asp-action="AddProduct" method="post" enctype="multipart/form-data">
+<form asp-controller="Product" asp-action="DeleteProduct" method="post">
+
+    <input type="hidden" asp-for="ProductID" />
+
     <!-- Product Name -->
     <div class="form-group mb-3">
         <label for="ProductName">Product Name</label>
-        <input type="text" class="form-control" id="ProductName" name="ProductName" required>
+        <input asp-for="ProductName" type="text" class="form-control" disabled="disabled">
         <div class="invalid-feedback">
-          <span asp-validation-for="ProductName"></span>
+            <span asp-validation-for="ProductName"></span>
         </div>
     </div>
 
     <!-- Category ID -->
     <div class="form-group mb-3">
         <label for="CategoryID">Category</label>
-        <select class="form-select" id="Category" name="CategoryID" required>
-            <option value="" selected disabled>Choose Category</option>
-           @foreach(ProductCategoryResponse productCategory in ViewBag.ProductCategory)
-           {
-               <option value="@productCategory.CategoryID">@productCategory.CategoryName</option>
-           }
+        <select asp-for="CategoryID" asp-items="ViewBag.ProductCategory" class="form-select" id="Category" name="CategoryID" disabled="disabled">
+            <option value="">Choose Category</option>
+            @*  @foreach (ProductCategoryResponse productCategory in ViewBag.ProductCategory)
+            {
+            <option value="@productCategory.CategoryID">@productCategory.CategoryName</option>
+            } *@
         </select>
         <div class="invalid-feedback">
-           <span asp-validation-for="CategoryID"></span>
+            <span asp-validation-for="CategoryID"></span>
         </div>
     </div>
 
     <!-- Price -->
     <div class="form-group mb-3">
         <label for="Price">Price</label>
-        <input type="number" step="0.01" class="form-control" id="Price" name="Price" required>
+        <input asp-for="Price" type="number" step="0.01" class="form-control" id="Price" name="Price" disabled="disabled">
         <div class="invalid-feedback">
-           <span asp-validation-for="Price"></span>
+            <span asp-validation-for="Price"></span>
         </div>
     </div>
 
     <!-- Quantity -->
     <div class="form-group mb-3">
         <label for="Quantity">Quantity</label>
-        <select class="form-select" id="Quantity" name="Quantity" required>
+        <select asp-for="Quantity" class="form-select" id="Quantity" name="Quantity" disabled="disabled">
             <option value="" selected disabled>Choose quantity</option>
             <!-- Assuming ProductQuantityOptions is an enum with these values -->
             <option value="Small">Small (100ml)</option>
@@ -59,31 +62,26 @@
             <option value="Large">Large (300ml)</option>
         </select>
         <div class="invalid-feedback">
-           <span asp-validation-for="Quantity"></span>
+            <span asp-validation-for="Quantity"></span>
         </div>
     </div>
 
-    <!-- Product Image Path -->
-    <div class="form-group mb-3">
-        <label for="ProductImage">Product Image</label>
-        <input type="file" class="form-control" id="ProductImage" name="ProductImage" accept="image/*">
-    </div>
 
     <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary">Add Product</button>
+    <button type="submit" class="btn btn-danger">Delete Product</button>
 
-    @if(ViewBag.Errors != null)
+    @if (ViewBag.Errors != null)
     {
         <div class="invalid-feedback">
             <ul>
-  
 
-            @foreach(string error in ViewBag.Errors)
-            {
-                <li>
-                    @error
-                </li>
-            }
+
+                @foreach (string error in ViewBag.Errors)
+                {
+                    <li>
+                        @error
+                    </li>
+                }
             </ul>
         </div>
     }

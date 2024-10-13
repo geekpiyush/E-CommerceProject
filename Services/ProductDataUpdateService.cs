@@ -37,11 +37,31 @@ namespace Services
                 throw new ArgumentException("Given id is not exist");
             }
 
+            if (productDataUpdateRequest.ProductImage != null && productDataUpdateRequest.ProductImage.Length > 0)
+            {
+                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "productImages");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string fileName = $"{Guid.NewGuid()}_{productDataUpdateRequest.ProductImage.FileName}";
+                string filePath = Path.Combine(folderPath, fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    productDataUpdateRequest.ProductImage.CopyTo(fileStream);
+                }
+
+                productDataUpdateRequest.ProductImagePath = $"/images/productImages/{fileName}";
+            }
             matchingProductData.ProductName = productDataUpdateRequest.ProductName;
             matchingProductData.Price = productDataUpdateRequest.Price;
             matchingProductData.ProductImagePath = productDataUpdateRequest.ProductImagePath;
             matchingProductData.Quantity = productDataUpdateRequest.Quantity;
             
+            _db.SaveChanges();
             return matchingProductData.ToProductDataResponse();
         }
     }

@@ -39,7 +39,7 @@
 {
     <div class="col-md-3">
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="~/images/BannerImage.png" alt="Card image cap">
+        <img class="card-img-top" src="@product.ProductImagePath" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">@product.ProductName</h5>
             <h5 class="card-title"><i class="fa-solid fa-list"></i>@product.CategoryID</h5>
@@ -47,6 +47,9 @@
                     <p class="card-text"><i class="fa-solid fa-weight-scale"></i>@product.Quantity</p>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             <a href="#" class="btn btn-primary">Buy Now</a>
+             <a asp-controller="Product" asp-action="UpdateProduct" asp-route-productID="@product.ProductID" class="btn btn-primary">Update</a>
+            <a asp-controller="Product" asp-action="DeleteProduct" asp-route-productID="@product.ProductID" class="btn btn-danger">Delete</a>
+           
         </div>
     </div>
     </div>

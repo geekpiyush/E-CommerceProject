@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Entities.ENUM;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,7 @@ namespace ServiceContracts.DTO
         [Required(ErrorMessage = "Quantity Can't be Blank")]
         public ProductQuantityOptions? Quantity { get; set; }
 
+        public IFormFile? ProductImage { get; set; }
         public string? ProductImagePath { get; set; }
 
 

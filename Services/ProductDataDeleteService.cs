@@ -32,6 +32,7 @@ namespace Services
             }
 
             _db.productData.Remove(matchingProductData);
+            _db.SaveChanges();
 
             return true;
         }
