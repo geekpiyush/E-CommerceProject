@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ServiceContracts;
+using ServiceContracts.DTO;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +36,12 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
     
     .AddRoleStore<RoleStore<ApplicationUserRole,ApplicationDbContext,Guid>>();
 
+builder.Services.AddScoped<IProductCategoryGetterService ,ProductCategoryGetterService>();
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<IProductDataAddService , ProductDataAdderServie>();
+builder.Services.AddScoped<IProductDataGetterService , ProductDataGetterService>();
+builder.Services.AddScoped<IProductDataDeleteService , ProductDataDeleteService>();
+builder.Services.AddScoped<IProductDataUpdateService , ProductDataUpdateService>();
 
 builder.Services.AddAuthorization(options =>
 {
