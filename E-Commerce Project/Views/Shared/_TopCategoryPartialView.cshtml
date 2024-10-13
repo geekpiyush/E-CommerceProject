@@ -1,13 +1,19 @@
-﻿@model IEnumerable<ProductCategory>
-<div class="container" style=" border:1px solid black; height:20vh;">
+﻿<link href="~/css/topcategory.css" rel="stylesheet" />
 
-    <ul>
+@model IEnumerable<ProductCategory>
+<div class="container" style=" border:1px solid black; height:50vh;">
+
+    <h1>Top Category</h1>
+
+    <ul class="productList">
         @foreach(var category in Model)
         {
             <li>
                 @category.CategoryName
+                <img src="~/images/base perfume.png" />
+                <span>Discover More<i class="bi bi-arrow-right-short"></i></span>
+                
             </li>
         }
-       
-</ul>
+    </ul>
 </div>
