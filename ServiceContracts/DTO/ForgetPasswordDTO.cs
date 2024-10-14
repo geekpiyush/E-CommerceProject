@@ -14,9 +14,6 @@ namespace ServiceContracts.DTO
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 
-        [Required(ErrorMessage = "Password can't be blank")]
-        [DataType(DataType.Password)]
-        public string? OldPassword { get; set; }
 
         [Required(ErrorMessage = "Password can't be blank")]
         [DataType(DataType.Password)]
