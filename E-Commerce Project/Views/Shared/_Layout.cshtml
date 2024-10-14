@@ -19,14 +19,15 @@
             <a class="navbar-brand" href="#">Heart's Desire</a>
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-                <div class="nav-item dropdown">
+                <a class="nav-item nav-link" asp-controller="Product" asp-action="GetAllProduct">Products</a>
+                @* <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Product
                     </a>
                     <div class="dropdown-menu" aria-labelledby="productDropdown">
-                        <a class="dropdown-item" asp-controller="Product" asp-action="GetAllProduct">All Products</a>
+                        
                     </div>
-                </div>
+                </div> *@
                 <a class="nav-item nav-link" href="/">Collection <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="/">About <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="/">Contact Us <span class="sr-only">(current)</span></a>
@@ -52,7 +53,7 @@
                         else
                         {
                             <a class="dropdown-item" asp-controller="Account" asp-action="Register">Create Account</a>
-                            <a class="dropdown-item" asp-controller="Account" asp-action="Login">Login</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" asp-controller="Account" asp-action="Login">Login</a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="ForgetPassword">Forget Password</a>
                         }
                     </div>
@@ -66,6 +67,62 @@
 
     <footer>
     </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content mt-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="loginFormContainer">
+                        <!-- The login form will be loaded here via AJAX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Load jQuery first -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- Then load the plugins like validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#loginModal').on('show.bs.modal', function () {
+                $.ajax({
+                    url: '@Url.Action("Login", "Account")',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#loginFormContainer').html(result);
+                    }
+                });
+            });
+
+            // Handle form submission inside the modal
+            $(document).on('submit', '#loginForm', function (e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload(); // Reload page after successful login
+                        } else {
+                            $('#loginFormContainer').html(response); // Replace with form including validation errors
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

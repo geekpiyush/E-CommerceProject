@@ -68,35 +68,49 @@ namespace E_Commerce_Project.Controllers
         public IActionResult Login()
         {
 
-         return View(); 
+            return PartialView("_loginPartialView");
 
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginDTO loginDTO,string? ReturnUrl)
+        public async Task<IActionResult> Login(LoginDTO loginDTO, string? ReturnUrl)
         {
-            // check validation error
-            if(ModelState.IsValid == false)
+            // Check validation errors
+            if (!ModelState.IsValid)
             {
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return PartialView("_LoginPartialView", loginDTO);
+                }
 
                 ViewBag.Errors = ModelState.Values.SelectMany(x => x.Errors).Select(e => e.ErrorMessage);
                 return View(loginDTO);
             }
 
-              var result = await _signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password,isPersistent:false,lockoutOnFailure:false);
+            var result = await _signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password, isPersistent: false, lockoutOnFailure: false);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = true });
+                }
 
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
             ModelState.AddModelError("Login", "Invalid Email or Password");
 
-            return View();
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("_LoginPartialView", loginDTO);
+            }
 
+            return View(loginDTO);
         }
+
+
 
 
         //Logout
