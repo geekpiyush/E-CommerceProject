@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /E-Commerce Project/appsettings.json
 /E-Commerce Project/appsettings.json
+/E-Commerce Project/appsettings.Development.json
+/.gitignore
+/.gitignore
