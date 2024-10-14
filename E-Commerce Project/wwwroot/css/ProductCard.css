@@ -1,0 +1,39 @@
+﻿body {
+}
+
+.card-img-top{
+    width:100px;
+}
+.card-btn-container {
+    background-color: #b56d4a;
+    width: 100%;
+    text-align: center;
+}
+.card-btn-container a {
+    width: calc(100% - 72s%);
+    margin: 0 0px;
+    background-color: #b56d4a;
+    border:none;
+    font-size:1rem;
+}
+.card-btn-container a:first-child{
+    border-right:1px solid white;
+}
+.card-btn-container a:last-child{
+    border-left: 1px solid white;
+}
+.card-text-para{
+   text-align:center;
+   font-size:.8rem;
+}
+.card-text-price{
+    font-size:2rem;
+}
+
+/*Searchbar CSS Code*/
+
+.form-group{
+    display:flex;
+    overflow:hidden;
+    margin-bottom:0px;
+}

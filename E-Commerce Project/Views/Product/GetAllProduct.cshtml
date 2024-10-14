@@ -1,15 +1,15 @@
-﻿@model IEnumerable<ProductDataResponse>
+﻿<link href="~/css/productcard.css" rel="stylesheet" />
+
+@model IEnumerable<ProductDataResponse>
 @{
     ViewBag.Title = "Perfume | All Products";
 }
 
-<h1>AllProduct</h1>
 <form asp-controller="Product" asp-action="GetAllProduct" method="get">
 <div class="container mt-4">
     <form class="form-inline" asp-controller="" asp-action="" method="GET">
         <div class="form-group mr-2">
-            <label for="searchBy" class="mr-2">Search By:</label>
-            <select class="form-control" id="searchBy" name="searchBy">
+            <select class="form-control" id="searchBy" name="searchBy" style="width:12vw;">
                 @foreach (var field in ViewBag.SearchFields)
                 {
                     if(field.Key == ViewBag.CurrentSearchBy)
@@ -23,13 +23,12 @@
 
                 }
             </select>
+                <div class="form-group mr-2">
+                    <label for="searchText" class="sr-only">Search</label>
+                    <input type="text" class="form-control" id="searchString" name="searchString" value="@ViewBag.CurrentSearchString" placeholder="Enter search text" style="width:50vw">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
         </div>
-        <div class="form-group mr-2">
-            <label for="searchText" class="sr-only">Search</label>
-            <input type="text" class="form-control" id="searchString" name="searchString" value="@ViewBag.CurrentSearchString" placeholder="Enter search text">
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-        <a asp-controller="Product" asp-action="GetAllProduct">Clear Search</a>
     </form>
 </div>
 
@@ -38,19 +37,20 @@
 @foreach(ProductDataResponse product in Model)
 {
     <div class="col-md-3">
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="@product.ProductImagePath" alt="Card image cap">
-        <div class="card-body">
+    <div class="card d-flex justify-content-center align-items-center" style="width: 18rem;">
+        <img class="card-img-top" src="@product.ProductImagePath" alt="Card image caps">
+        <div class="card-body d-flex align-items-center flex-column p-2 g-5">
             <h5 class="card-title">@product.ProductName</h5>
-            <h5 class="card-title"><i class="fa-solid fa-list"></i>@product.CategoryID</h5>
-            <p class="card-text"><i class="fa-solid fa-indian-rupee-sign"></i>@product.Price</p>
-                    <p class="card-text"><i class="fa-solid fa-weight-scale"></i>@product.Quantity</p>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Buy Now</a>
-             <a asp-controller="Product" asp-action="UpdateProduct" asp-route-productID="@product.ProductID" class="btn btn-primary">Update</a>
-            <a asp-controller="Product" asp-action="DeleteProduct" asp-route-productID="@product.ProductID" class="btn btn-danger">Delete</a>
-           
+                        <!--<h5 class="card-title"><i class="fa-solid fa-list"></i>@product.CategoryID</h5>-->
+            <p class="card-text-price"><i class="fa-solid fa-indian-rupee-sign"></i>@product.Price</p>
+                    <!--<p class="card-text"><i class="fa-solid fa-weight-scale"></i></p>-->
+                        <p class="card-text-para">For a gentleman who wears his heart on his sleeve and knows self-love is the greatest virtue @product.Quantity.</p>
         </div>
+                    <div class="card-btn-container">
+                        <a href="#" class="btn btn-primary">Buy Now</a>
+                        <a asp-controller="Product" asp-action="UpdateProduct" asp-route-productID="@product.ProductID" class="btn btn-primary">Update</a>
+                        <a asp-controller="Product" asp-action="DeleteProduct" asp-route-productID="@product.ProductID" class="btn btn-danger">Delete</a>
+                    </div>
     </div>
     </div>
 }
