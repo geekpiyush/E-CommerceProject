@@ -1,7 +1,7 @@
 ﻿<link href="~/css/topcategory.css" rel="stylesheet" />
 
 @model IEnumerable<ProductCategory>
-<div class="container" style=" border:1px solid black; height:50vh;">
+<div class="container" style=" height:50vh;">
 
     <h1>Top Category</h1>
 
@@ -9,8 +9,8 @@
         @foreach(var category in Model)
         {
             <li>
-                @category.CategoryName
                 <img src="~/images/base perfume.png" />
+                @category.CategoryName
                 <span>Discover More<i class="bi bi-arrow-right-short"></i></span>
                 
             </li>
