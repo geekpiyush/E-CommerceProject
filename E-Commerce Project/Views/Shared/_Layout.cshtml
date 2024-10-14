@@ -114,9 +114,9 @@
                     data: form.serialize(),
                     success: function (response) {
                         if (response.success) {
-                            location.reload(); // Reload page after successful login
+                            location.reload(); 
                         } else {
-                            $('#loginFormContainer').html(response); // Replace with form including validation errors
+                            $('#loginFormContainer').html(response); 
                         }
                     }
                 });
