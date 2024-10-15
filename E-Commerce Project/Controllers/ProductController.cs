@@ -1,7 +1,9 @@
 ﻿using Entities.DatabaseContext;
+using Entities.ENUM;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services.Helpers;
@@ -30,7 +32,7 @@ namespace E_Commerce_Project.Controllers
 
         }
 
-        public IActionResult GetAllProduct(string searchBy, string? searchString)
+        public IActionResult GetAllProduct(string searchBy, string? searchString, string sortBy = nameof(ProductDataResponse.ProductName),SortOrderOptions sortOrder = SortOrderOptions.ASC)
         {
 
             ViewBag.SearchFields = new Dictionary<string, string>()
@@ -47,7 +49,13 @@ namespace E_Commerce_Project.Controllers
             ViewBag.CurrentSearchBy = searchBy;
             ViewBag.CurrentSearchString = searchString;
 
-            return View(productData);
+            //sortOrder
+            List<ProductDataResponse> sortedProduct = _dataGetterService.GetSortedProduct(productData, sortBy, sortOrder);
+
+            ViewBag.CurrentSortBy = sortBy;
+            ViewBag.CurrentSortOrder = sortOrder;
+
+            return View(sortedProduct);
         }
 
         public IActionResult AddProduct()
