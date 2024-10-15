@@ -2,7 +2,16 @@
 @{
     ViewBag.Title = "Perfume | Register";
 }
-
+<style>
+    input[type="text"], select {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
 <h1>Register</h1>
 
 <div>
@@ -21,6 +30,20 @@
             <label asp-for="Email"></label>
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        @* Role *@
+        <div class="form-group mb-3">
+            <label asp-for="UserType">User Role</label>
+            <select asp-for="UserType" class="form-select" id="UserType" name="UserType" required>
+                <option value="" selected disabled>Choose Role</option>
+                <!-- Assuming ProductQuantityOptions is an enum with these values -->
+                <option value="Customer">Customer</option>
+                <option value="Admin">Admin</option>
+            </select>
+            <div class="invalid-feedback">
+                <span asp-validation-for="UserType"></span>
+            </div>
         </div>
 
         @* Phone *@

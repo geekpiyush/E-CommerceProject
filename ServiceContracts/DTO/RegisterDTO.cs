@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.ENUM;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -30,6 +31,8 @@ namespace ServiceContracts.DTO
         [Compare("Password", ErrorMessage = "Password and Confirm Password do not match")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+
+        public UserTypeOptions UserType {  get; set; } = UserTypeOptions.Customer;
        
 
     }

@@ -1,4 +1,5 @@
-﻿using Entities.Identity;
+﻿using Entities.ENUM;
+using Entities.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,12 @@ namespace E_Commerce_Project.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly RoleManager<ApplicationUserRole> _roleManager;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationUserRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -44,10 +47,32 @@ namespace E_Commerce_Project.Controllers
                 PhoneNumber = registerDTO.Phone,
 
             };
+
               IdentityResult result =  await _userManager.CreateAsync(user,registerDTO.Password);
 
             if(result.Succeeded)
             {
+                if(registerDTO.UserType == UserTypeOptions.Admin)
+                {
+                    //create admin role
+                    if(await _roleManager.FindByNameAsync(UserTypeOptions.Admin.ToString()) == null)
+                    {
+                        ApplicationUserRole applicationUserRole = new ApplicationUserRole() { Name = UserTypeOptions.Admin.ToString() };
+                       await _roleManager.CreateAsync(applicationUserRole);
+                    }
+
+                    //Add user to Admin Role
+                   await _userManager.AddToRoleAsync(user, UserTypeOptions.Admin.ToString());
+                }
+                else
+                {
+                    //Create customer role
+                    ApplicationUserRole applicationUserRole = new ApplicationUserRole() { Name = UserTypeOptions.Customer.ToString() };
+                    await _roleManager.CreateAsync(applicationUserRole);
+                    //Add user to Customer Role
+                    await _userManager.AddToRoleAsync(user, UserTypeOptions.Customer.ToString());
+                }
+
                 //Sign in user
                 await _signInManager.SignInAsync(user, isPersistent: false);
 

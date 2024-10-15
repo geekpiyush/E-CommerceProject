@@ -19,15 +19,19 @@
             <a class="navbar-brand" href="#">Heart's Desire</a>
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" asp-controller="Product" asp-action="GetAllProduct">Products</a>
-                @* <div class="nav-item dropdown">
+                <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Product
                     </a>
                     <div class="dropdown-menu" aria-labelledby="productDropdown">
+                        <a class="dropdown-item" asp-controller="Product" asp-action="GetAllProduct">Products</a>
+                        @if(User.IsInRole("Admin"))
+                        {
+                            <a class="dropdown-item" asp-controller="Product" asp-action="AddProduct">Add Product</a>
+                        }
                         
                     </div>
-                </div> *@
+                </div>
                 <a class="nav-item nav-link" href="/">Collection <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="/">About <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="/">Contact Us <span class="sr-only">(current)</span></a>
