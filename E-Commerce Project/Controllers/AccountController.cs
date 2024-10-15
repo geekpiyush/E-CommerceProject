@@ -1,4 +1,5 @@
-﻿using Entities.ENUM;
+﻿
+using Entities.ENUM;
 using Entities.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -134,8 +135,6 @@ namespace E_Commerce_Project.Controllers
 
             return View(loginDTO);
         }
-
-
 
 
         //Logout
