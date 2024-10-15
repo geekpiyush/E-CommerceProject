@@ -35,27 +35,39 @@
     </form>
 </div>
 
-    <div class="container row mt-3">
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <a asp-controller="Product" asp-action="GetAllProduct" asp-route-sortBy="ProductName" asp-route-sortOrder="@(ViewBag.CurrentSortBy == "ProductName" && ViewBag.CurrentSortOrder == SortOrderOptions.ASC ? SortOrderOptions.DESC : SortOrderOptions.ASC)">
-                    Product Name
-                    @if (ViewBag.CurrentSortBy == "ProductName")
-                    {
-                        <i class="@(ViewBag.CurrentSortOrder == SortOrderOptions.ASC ? "fa fa-sort-asc" : "fa fa-sort-desc")"></i>
-                    }
-                </a>
+
+
+    <div class="container mt-4">
+       
+        <h3 class="text-center">Sort Products</h3>
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <!-- Product Name Sort -->
+                    <th>
+                        <a asp-controller="Product" asp-action="GetAllProduct" asp-route-sortBy="ProductName" asp-route-sortOrder="@(ViewBag.CurrentSortBy == "ProductName" && ViewBag.CurrentSortOrder == SortOrderOptions.ASC ? SortOrderOptions.DESC : SortOrderOptions.ASC)">
+                            Product Name
+                            @if (ViewBag.CurrentSortBy == "ProductName")
+                            {
+                                <i class="@(ViewBag.CurrentSortOrder == SortOrderOptions.ASC ? "fa fa-sort-asc" : "fa fa-sort-desc")"></i>
+                            }
+                        </a>
+                    </th>
+
+                    <th>
+                        <a asp-controller="Product" asp-action="GetAllProduct" asp-route-sortBy="Price" asp-route-sortOrder="@(ViewBag.CurrentSortBy == "Price" && ViewBag.CurrentSortOrder == SortOrderOptions.ASC ? SortOrderOptions.DESC : SortOrderOptions.ASC)">
+                            Price
+                            @if (ViewBag.CurrentSortBy == "Price")
+                            {
+                                <i class="@(ViewBag.CurrentSortOrder == SortOrderOptions.ASC ? "fa fa-sort-asc" : "fa fa-sort-desc")"></i>
+                            }
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            </table>
             </div>
-            <div class="col-md-6">
-                <a asp-controller="Product" asp-action="GetAllProduct" asp-route-sortBy="Price" asp-route-sortOrder="@(ViewBag.CurrentSortBy == "Price" && ViewBag.CurrentSortOrder == SortOrderOptions.ASC ? SortOrderOptions.DESC : SortOrderOptions.ASC)">
-                    Price
-                    @if (ViewBag.CurrentSortBy == "Price")
-                    {
-                        <i class="@(ViewBag.CurrentSortOrder == SortOrderOptions.ASC ? "fa fa-sort-asc" : "fa fa-sort-desc")"></i>
-                    }
-                </a>
-            </div>
-        </div>
+
 
 <div class="container row mt-3">
 @foreach(ProductDataResponse product in Model)
