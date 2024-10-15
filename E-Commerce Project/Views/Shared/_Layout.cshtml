@@ -18,27 +18,32 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
             <a class="navbar-brand" href="#">Heart's Desire</a>
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="/"><i class="fa fa-solid fa-house mr-1"></i>Home <span class="sr-only">(current)</span></a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Product
+                        <i class="fa fa-solid fa-box mr-1"></i>Product
                     </a>
                     <div class="dropdown-menu" aria-labelledby="productDropdown">
-                        <a class="dropdown-item" asp-controller="Product" asp-action="GetAllProduct">Products</a>
+                        <a class="dropdown-item" asp-controller="Product" asp-action="GetAllProduct"><i class="fa fa-solid fa-box mr-1"></i>Products</a>
                         @if(User.IsInRole("Admin"))
                         {
-                            <a class="dropdown-item" asp-controller="Product" asp-action="AddProduct">Add Product</a>
+                            <a class="dropdown-item" asp-controller="Product" asp-action="AddProduct"><i class="fa fa-solid fa-plus mr-1"></i>Add Product</a>
                         }
                         
                     </div>
                 </div>
-                <a class="nav-item nav-link" href="/">Collection <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="/">About <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="/">Contact Us <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="/"><i class="fa fa-solid fa-th-list mr-1"></i>Collection <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="/"><i class="fa-solid fa-info-circle mr-1"></i>About <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="/"><i class="fa-solid fa-envelope mr-1"></i>Contact Us <span class="sr-only">(current)</span></a>
                 </div>
+
+
+            <!-- Account and Cart Section -->
+            <div class="d-flex align-items-center">
+                <!-- Account Dropdown -->
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i>
+                        <i class="fa-solid fa-user mr-1"></i>
                         @if (User.Identity.IsAuthenticated)
                         {
                             @User.Identity.Name
@@ -47,20 +52,26 @@
                         {
                             <span>Account</span>
                         }
+                        <span class="sr-only">(current)</span>
                     </a>
-
                     <div class="dropdown-menu" aria-labelledby="accountDropdown">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><i class="fa-solid fa-right-from-bracket mr-2"></i>Logout</a>
                         }
                         else
                         {
-                            <a class="dropdown-item" asp-controller="Account" asp-action="Register">Create Account</a>
-                            <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" asp-controller="Account" asp-action="Login">Login</a>
-                            <a class="dropdown-item" asp-controller="Account" asp-action="ForgetPassword">Forget Password</a>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="Register"><i class="fa-solid fa-plus mr-2"></i>Create Account</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" asp-controller="Account" asp-action="Login"><i class="fa-solid fa-right-to-bracket mr-2"></i>Login</a>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="ForgetPassword"><i class="fa-solid fa-key mr-2"></i>Forget Password</a>
                         }
                     </div>
+                </div>
+
+                <!-- Cart Icon -->
+                <a class="nav-item nav-link" href="#">
+                    <i class="fa-solid fa-shopping-cart"></i> Cart <span class="sr-only">(current)</span>
+                </a>
             </div>
         </div>
     </nav>
