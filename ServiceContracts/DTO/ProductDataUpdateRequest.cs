@@ -33,9 +33,11 @@ namespace ServiceContracts.DTO
 
         public string? ProductImagePath { get; set; }
 
+        public string? ProductDescription { get; set; }
+
         public ProductData ToProductData()
         {
-            return new ProductData() { CategoryID = CategoryID, Price = Price, ProductID = ProductID, Quantity = Quantity, ProductImagePath = ProductImagePath, ProductName = ProductName };
+            return new ProductData() { CategoryID = CategoryID, Price = Price, ProductID = ProductID, Quantity = Quantity, ProductImagePath = ProductImagePath, ProductName = ProductName, ProductDescription = ProductDescription };
         }
     }
 }

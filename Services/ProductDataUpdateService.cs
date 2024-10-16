@@ -5,6 +5,7 @@ using ServiceContracts.DTO;
 using Services.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,7 @@ namespace Services
             matchingProductData.Price = productDataUpdateRequest.Price;
             matchingProductData.ProductImagePath = productDataUpdateRequest.ProductImagePath;
             matchingProductData.Quantity = productDataUpdateRequest.Quantity;
+            matchingProductData.ProductDescription = productDataUpdateRequest.ProductDescription;
             
             _db.SaveChanges();
             return matchingProductData.ToProductDataResponse();

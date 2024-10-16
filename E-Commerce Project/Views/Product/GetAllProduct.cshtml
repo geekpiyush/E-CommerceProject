@@ -35,9 +35,7 @@
     </form>
 </div>
 
-
-
-    <div class="container mt-4">
+@*     <div class="container mt-4">
        
         <h3 class="text-center">Sort Products</h3>
         <table class="table table-bordered text-center">
@@ -66,31 +64,38 @@
                 </tr>
             </thead>
             </table>
-            </div>
+            </div> *@
 
 
 <div class="container row mt-3">
 @foreach(ProductDataResponse product in Model)
 {
-    <div class="col-md-3">
+            <div class="col-md-3 ml-4">
     <div class="card d-flex justify-content-center align-items-center" style="width: 18rem;">
-        <img class="card-img-top" src="@product.ProductImagePath" alt="Card image caps">
+                    <img class="card-img-top" src="@product.ProductImagePath" alt="Product Image" style="width: 100%; height: 200px; object-fit: cover;">
         <div class="card-body d-flex align-items-center flex-column p-2 g-5">
             <h5 class="card-title">@product.ProductName</h5>
-                        <!--<h5 class="card-title"><i class="fa-solid fa-list"></i>@product.CategoryID</h5>-->
-            <p class="card-text-price"><i class="fa-solid fa-indian-rupee-sign"></i>@product.Price</p>
-                    <!--<p class="card-text"><i class="fa-solid fa-weight-scale"></i></p>-->
-                        <p class="card-text-para">For a gentleman who wears his heart on his sleeve and knows self-love is the greatest virtue @product.Quantity.</p>
+                        <p class="card-title"><i class="fa-solid fa-list mr-2"></i>@product.ProductCategory</p>
+
+                        <p class="card-text-price"><i class="fa fa-solid fa-indian-rupee-sign fa-sm mr-2"></i>@product.Price</p>
+
+                        @* <p class="card-text"><i class="fa-solid fa-weight-scale"></i>@product.Quantity</p> *@
+
+                        <p class="card-text-para"><i class="fa fa-info-circle"></i> @product.ProductDescription</p>
         </div>
                     <div class="card-btn-container">
-                        <a href="#" class="btn btn-primary">Buy Now</a>
                         @if(User.IsInRole("Admin"))
                         {
                             <a asp-controller="Product" asp-action="UpdateProduct" asp-route-productID="@product.ProductID" class="btn btn-primary">Update</a>
                             <a asp-controller="Product" asp-action="DeleteProduct" asp-route-productID="@product.ProductID" class="btn btn-danger">Delete</a>
                         }
-                        
-                    </div>
+                        else
+                        {
+                            <a asp-controller="#" asp-action="#" class="btn btn-success">Add To Cart</a>
+                            <a asp-controller="#" asp-action="#" class="btn btn-primary">Buy Now</a>
+                        }
+
+                 </div>
     </div>
     </div>
 

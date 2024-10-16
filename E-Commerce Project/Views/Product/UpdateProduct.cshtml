@@ -66,6 +66,15 @@
         </div>
     </div>
 
+    <!-- Product Description -->
+    <div class="form-group mb-3">
+        <label asp-for="ProductDescription">Product Description</label>
+        <textarea asp-for="ProductDescription" class="form-control" id="ProductDescription" name="ProductDescription" rows="5" placeholder="Enter product description" required></textarea>
+        <div class="invalid-feedback">
+            <span asp-validation-for="ProductDescription"></span>
+        </div>
+    </div>
+
     <!-- Product Image Path -->
     <div class="form-group mb-3">
         <label for="ProductImage">Product Image</label>

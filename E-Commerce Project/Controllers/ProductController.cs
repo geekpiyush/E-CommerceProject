@@ -1,6 +1,7 @@
 ﻿using Entities.DatabaseContext;
 using Entities.ENUM;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -44,7 +45,20 @@ namespace E_Commerce_Project.Controllers
                 { nameof(ProductDataResponse.Quantity),"Quantity" }
 
             };
+
+
             List<ProductDataResponse> productData = _dataGetterService.GetFilterdProduct(searchBy, searchString);
+
+             List<ProductCategoryResponse> categories = _categoryService.GetAllProductCategories();
+            // Map category name to products
+            foreach (var product in productData)
+            {
+                var category = categories.FirstOrDefault(c => c.CategoryID == product.CategoryID);
+                if (category != null)
+                {
+                    product.ProductCategory = category.CategoryName;
+                }
+            }
 
             ViewBag.CurrentSearchBy = searchBy;
             ViewBag.CurrentSearchString = searchString;

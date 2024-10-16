@@ -25,6 +25,8 @@ namespace ServiceContracts.DTO
 
         public string? ProductImagePath { get; set; }
 
+        public string? ProductDescription {  get; set; }
+
 
         public override string ToString()
         {
@@ -41,7 +43,7 @@ namespace ServiceContracts.DTO
     {
         public static ProductDataResponse ToProductDataResponse(this ProductData productData)
         {
-            return new ProductDataResponse() { CategoryID = productData.CategoryID, ProductName = productData.ProductName, Price = productData.Price,ProductID = productData.ProductID, Quantity = productData.Quantity,ProductImagePath =  productData.ProductImagePath};
+            return new ProductDataResponse() { CategoryID = productData.CategoryID, ProductName = productData.ProductName, Price = productData.Price,ProductID = productData.ProductID, Quantity = productData.Quantity,ProductImagePath =  productData.ProductImagePath,ProductDescription = productData.ProductDescription};
         }
     }
 }
