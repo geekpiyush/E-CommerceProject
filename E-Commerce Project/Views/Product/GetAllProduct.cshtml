@@ -78,17 +78,23 @@
                         <p class="card-title"><i class="fa-solid fa-list mr-2"></i>@product.ProductCategory</p>
 
                         <p class="card-text-price"><i class="fa fa-solid fa-indian-rupee-sign fa-sm mr-2"></i>@product.Price</p>
-                    <!--<p class="card-text"><i class="fa-solid fa-weight-scale"></i></p>-->
-                        <p class="card-text-para">For a gentleman who wears his heart on his sleeve and knows self-love is the greatest virtue @product.Quantity.</p>
+
+                        @* <p class="card-text"><i class="fa-solid fa-weight-scale"></i>@product.Quantity</p> *@
+
+                        <p class="card-text-para"><i class="fa fa-info-circle"></i> @product.ProductDescription</p>
         </div>
                     <div class="card-btn-container">
-                        <a href="" class="btn btn-success">Add To Cart</a>
                         @if(User.IsInRole("Admin"))
                         {
                             <a asp-controller="Product" asp-action="UpdateProduct" asp-route-productID="@product.ProductID" class="btn btn-primary">Update</a>
                             <a asp-controller="Product" asp-action="DeleteProduct" asp-route-productID="@product.ProductID" class="btn btn-danger">Delete</a>
                         }
-                        
+                        else
+                        {
+                            <a asp-controller="#" asp-action="#" class="btn btn-success">Add To Cart</a>
+                            <a asp-controller="#" asp-action="#" class="btn btn-primary">Buy Now</a>
+                        }
+
                  </div>
     </div>
     </div>

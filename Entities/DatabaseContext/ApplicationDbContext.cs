@@ -32,7 +32,7 @@ namespace Entities.DatabaseContext
             //seed data
 
             modelBuilder.Entity<ProductData>().HasData(new ProductData
-            { ProductID = 11001, CategoryID = 9001, ProductName = "Chanel No. 5", Quantity = "250ml", Price = 347.86 }
+            { ProductID = 11001, CategoryID = 9001, ProductName = "Chanel No. 5", Quantity = "250ml", Price = 347.86,ProductDescription = "For a gentleman who wears his heart on his sleeve and knows self-love is the greatest virtue" }
             , new ProductData { ProductID = 11002, CategoryID = 9002, ProductName = "Dior Sauvage", Quantity = "150ml", Price = 1446.72 },
             new ProductData { ProductID = 11003, CategoryID = 9002, ProductName = "Tom Ford Black Orchid", Quantity = "200ml", Price = 2420.24 },
             new ProductData { ProductID = 11004, CategoryID = 9003, ProductName = "Gucci Bloom", Quantity = "100ml", Price = 1087.0 },

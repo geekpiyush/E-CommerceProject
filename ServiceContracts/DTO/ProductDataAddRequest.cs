@@ -28,10 +28,12 @@ namespace ServiceContracts.DTO
         public IFormFile? ProductImage { get; set; }
         public string? ProductImagePath { get; set; }
 
+        public string? ProductDescription {  get; set; }
+
 
         public ProductData ToProductData ()
         {
-            return new ProductData() { ProductName = ProductName, CategoryID = CategoryID, Price = Price, Quantity = Quantity.ToString(), ProductImagePath = ProductImagePath };
+            return new ProductData() { ProductName = ProductName, CategoryID = CategoryID, Price = Price, Quantity = Quantity.ToString(), ProductImagePath = ProductImagePath,ProductDescription = ProductDescription };
         }
     }
 

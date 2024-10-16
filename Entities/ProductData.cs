@@ -23,5 +23,7 @@ namespace Entities
 
         public string? ProductImagePath { get; set; }
 
+        public string? ProductDescription {  get; set; }
+
     }
 }
