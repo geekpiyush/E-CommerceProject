@@ -1,7 +1,73 @@
-﻿body {
+﻿*{
+    margin:0px;
+    padding:0px;
+    box-sizing:border-box;
+}
+body{
+    text-transform:capitalize;
+
+}
+.hed-section{
+   height:13vh;
+   background-color:lightgray;
+   width:100%;
+   text-align:center;
+/*   padding:1rem;*/
+}
+.main-container{
+    height:55vw;
+    display:flex;
+    justify-content:space-around;
+/*    align-items:center;*/
+    padding:2rem;
 }
 
-h1{
-    background-color:red;
+.img-container img{
+   height:30rem;
+   width:30rem;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+    padding:3px;
+}
 
+label {
+    font-size: 1rem;
+    color: grey;
+   
+}
+.form-control {
+    height: 2rem;
+    width: 30rem;
+   
+}
+select {
+    height: 2rem;
+    width: 30rem;
+}
+
+
+.submit {
+    height: 2.5rem;
+    width: 10rem;
+    margin-top: 10px;
+    color: #fff;
+    
+    border: none;
+    background-color: grey;
+    border-radius:30px;
+    font-size:1.1rem;
+}
+@media only screen and (max-width: 600px) {
+   .main-container{
+       flex-direction:column;
+       margin-top:2rem;
+       padding:2px;
+   }
+    .hed-section{
+       width:100%;
+       height:15vh;
+    }
 }

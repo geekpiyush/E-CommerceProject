@@ -7,80 +7,97 @@
 }
 
 
-<style>
-    input[type="text"], select {
-        width: 100%;
-        padding: 10px;
-        margin: 8px 0;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-</style>
-<h1>Register</h1>
 
-<div>
-    Already Registered? <a asp-action="Login" asp-controller="Account">Login</a>
+@* heading-section *@
+<div class="hed-section">
+   <div  class="register">
+       <h2>Register-form</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur
+        </p>
+   </div>
+</div>
+@*form-section*@
+<div class="main-container">
+      <div class="img-container">
+        <img src="~/css/download (1).png" />
+    </div> 
 
-    <form asp-controller="Account" asp-action="Register" method="post">
-        @* CustomerName *@
-        <div>
+    @*form-section*@
+    <div class="form-container">
+        <form asp-controller="Account" asp-action="Register" method="post">
+            @* CustomerName *@
             <label asp-for="CustomerName"></label>
-            <input asp-for="CustomerName" class="form-control" />
+            <input asp-for="CustomerName" class="form-control" required >
             <span asp-validation-for="CustomerName" class="text-danger"></span>
-        </div>
 
-        @* Email *@
-        <div>
+            @* Email *@
             <label asp-for="Email"></label>
-            <input asp-for="Email" class="form-control" />
+            <input asp-for="Email" class="form-control">
             <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
 
-        @* Role *@
-        <div class="form-group mb-3">
+            @* Role *@
             <label asp-for="UserType">User Role</label>
             <select asp-for="UserType" class="form-select" id="UserType" name="UserType" required>
                 <option value="" selected disabled>Choose Role</option>
-                <!-- Assuming ProductQuantityOptions is an enum with these values -->
                 <option value="Customer">Customer</option>
                 <option value="Admin">Admin</option>
             </select>
-            <div class="invalid-feedback">
-                <span asp-validation-for="UserType"></span>
-            </div>
-        </div>
+            <span asp-validation-for="UserType"></span>
 
-        @* Phone *@
-        <div>
+            @* Phone *@
             <label asp-for="Phone"></label>
             <input asp-for="Phone" class="form-control" />
             <span asp-validation-for="Phone" class="text-danger"></span>
-        </div>
 
-        @* Password *@
-        <div>
+            @* Password *@
             <label asp-for="Password"></label>
             <input asp-for="Password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
 
-        @* Confirm Password *@
-        <div>
+            @* Confirm Password *@
             <label asp-for="ConfirmPassword"></label>
             <input asp-for="ConfirmPassword" class="form-control" />
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
 
-        @* Register Button *@
-        <div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </div>
-    </form>
-</div>
+            Already Registered? <a asp-action="Login" asp-controller="Account">Login</a>
+            <button class="submit"> Register</button>
 
+            </form>
+       </div>
+       </div>
 
     <!-- Client-Side Validation Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+            
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
