@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Entities.DatabaseContext;
+using RepositoryContracts;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services.Helpers;
@@ -14,14 +15,14 @@ namespace Services
 {
     public class ProductDataUpdateService : IProductDataUpdateService
     {
-        private readonly ApplicationDbContext _db;
-        private readonly IProductDataGetterService _productService;
-        public ProductDataUpdateService(IProductDataGetterService productService,ApplicationDbContext db)
+        private readonly IProductDataUpdateRepository _dataUpdateRepository;
+        private readonly IProductDataGetterRepository _dataGetterRepository;
+        public ProductDataUpdateService(IProductDataGetterRepository productDataGetterRepository,IProductDataUpdateRepository productDataUpdateRepository)
         {
-            _productService = productService;
-            _db = db;
+            _dataGetterRepository = productDataGetterRepository;
+            _dataUpdateRepository = productDataUpdateRepository;
         }
-        public ProductDataResponse UpdateProductData(ProductDataUpdateRequest? productDataUpdateRequest)
+        public async Task<ProductDataResponse> UpdateProductData(ProductDataUpdateRequest? productDataUpdateRequest)
         {
            if(productDataUpdateRequest == null)
             {
@@ -31,7 +32,7 @@ namespace Services
             ValidationHelper.ModelValidation(productDataUpdateRequest);
 
             //find matching product
-            ProductData? matchingProductData = _db.productData.FirstOrDefault(temp => temp.ProductID == productDataUpdateRequest.ProductID);
+            ProductData? matchingProductData = await _dataGetterRepository.GetProductByProductID(productDataUpdateRequest.ProductID);
 
             if(matchingProductData == null)
             {
@@ -63,7 +64,7 @@ namespace Services
             matchingProductData.Quantity = productDataUpdateRequest.Quantity;
             matchingProductData.ProductDescription = productDataUpdateRequest.ProductDescription;
             
-            _db.SaveChanges();
+             await _dataUpdateRepository.UpdateProduct(matchingProductData);
             return matchingProductData.ToProductDataResponse();
         }
     }

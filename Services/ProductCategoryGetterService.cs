@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Entities.DatabaseContext;
+using RepositoryContracts;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using System;
@@ -12,25 +13,25 @@ namespace Services
 {
     public class ProductCategoryGetterService : IProductCategoryGetterService
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IProductCategoryGetterRepository _categoryGetterRepository;
 
-        public ProductCategoryGetterService(ApplicationDbContext db)
+        public ProductCategoryGetterService(IProductCategoryGetterRepository productCategoryGetterRepository)
         {
-            _db = db;
+            _categoryGetterRepository = productCategoryGetterRepository;
             
         }
-        public List<ProductCategoryResponse> GetAllProductCategories()
+        public async Task<List<ProductCategoryResponse>>GetAllProductCategories()
         {
-            return _db.ProductCategory.Select(temp => temp.ToProductCategoryResponse()).ToList();
+            return (await _categoryGetterRepository.GetProductCategories()).Select(temp => temp.ToProductCategoryResponse()).ToList();
         }
 
-        public ProductCategoryResponse? GetProductCategoryByCategoryID(int productCategoryID)
+        public async Task<ProductCategoryResponse?> GetProductCategoryByCategoryID(int productCategoryID)
         {
            if(productCategoryID == null)
             {
                 return null;
             }
-             ProductCategory? productCategory = _db.ProductCategory.FirstOrDefault(temp => temp.CategoryID == productCategoryID);
+            ProductCategory? productCategory = await _categoryGetterRepository.GetProductCategoryByCategoryID(productCategoryID);
 
             if(productCategory == null)
             {

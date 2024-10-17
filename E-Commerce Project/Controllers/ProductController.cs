@@ -33,7 +33,7 @@ namespace E_Commerce_Project.Controllers
 
         }
 
-        public IActionResult GetAllProduct(string searchBy, string? searchString, string sortBy = nameof(ProductDataResponse.ProductName),SortOrderOptions sortOrder = SortOrderOptions.ASC)
+        public async Task<IActionResult> GetAllProduct(string searchBy, string? searchString, string sortBy = nameof(ProductDataResponse.ProductName),SortOrderOptions sortOrder = SortOrderOptions.ASC)
         {
 
             ViewBag.SearchFields = new Dictionary<string, string>()
@@ -47,9 +47,9 @@ namespace E_Commerce_Project.Controllers
             };
 
 
-            List<ProductDataResponse> productData = _dataGetterService.GetFilterdProduct(searchBy, searchString);
+            List<ProductDataResponse> productData = await _dataGetterService.GetFilterdProduct(searchBy, searchString);
 
-             List<ProductCategoryResponse> categories = _categoryService.GetAllProductCategories();
+             List<ProductCategoryResponse> categories = await _categoryService.GetAllProductCategories();
             // Map category name to products
             foreach (var product in productData)
             {
@@ -72,37 +72,39 @@ namespace E_Commerce_Project.Controllers
             return View(sortedProduct);
         }
 
-        public IActionResult AddProduct()
+        public async Task<IActionResult> AddProduct()
         {
-            List<ProductCategoryResponse> productCategoryResponses = _categoryService.GetAllProductCategories();
+            List<ProductCategoryResponse> productCategoryResponses = await _categoryService.GetAllProductCategories();
 
-            ViewBag.ProductCategory = productCategoryResponses;
+            ViewBag.ProductCategory = productCategoryResponses.Select(temp => new SelectListItem() { Text = temp.CategoryName, Value = temp.CategoryID.ToString()});
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddProduct(ProductDataAddRequest productDataAddRequest)
+        public async Task<IActionResult> AddProduct(ProductDataAddRequest productDataAddRequest)
         {
             if (!ModelState.IsValid)
             {
-                List<ProductCategoryResponse> productCategoryResponses = _categoryService.GetAllProductCategories();
+                List<ProductCategoryResponse> productCategoryResponses = await _categoryService.GetAllProductCategories();
 
-                ViewBag.ProductCategory = productCategoryResponses;
+                ViewBag.ProductCategory = productCategoryResponses.Select(temp => new SelectListItem() { Text = temp.CategoryName, Value = temp.CategoryID.ToString() });
 
                 ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
 
+                return View();
+
             }
 
-            ProductDataResponse productData = _dataAddService.AddProduct(productDataAddRequest);
+            ProductDataResponse productData = await _dataAddService.AddProduct(productDataAddRequest);
 
             return RedirectToAction("GetAllProduct", "Product");
         }
 
         [HttpGet]
         [Route("{productID}")]
-        public IActionResult UpdateProduct(int productID)
+        public async Task<IActionResult> UpdateProduct(int productID)
         {
-            ProductDataResponse productData = _dataGetterService.GetProductByProductID(productID);
+            ProductDataResponse productData = await _dataGetterService.GetProductByProductID(productID);
 
             if (productData == null)
             {
@@ -111,7 +113,7 @@ namespace E_Commerce_Project.Controllers
 
             ProductDataUpdateRequest productDataUpdate = productData.ToProductUpdateRequest();
 
-            List<ProductCategoryResponse> productCategoryResponses = _categoryService.GetAllProductCategories();
+            List<ProductCategoryResponse> productCategoryResponses = await _categoryService.GetAllProductCategories();
 
             ViewBag.ProductCategory = productCategoryResponses.Select(temp => new SelectListItem() { Text = temp.CategoryName, Value = temp.CategoryID.ToString() });
 
@@ -120,10 +122,10 @@ namespace E_Commerce_Project.Controllers
 
         [HttpPost]
         [Route("{productID}")]
-        public IActionResult UpdateProduct(ProductDataUpdateRequest productDataUpdate)
+        public async Task<IActionResult> UpdateProduct(ProductDataUpdateRequest productDataUpdate)
         {
 
-           ProductDataResponse productDataResponse =  _dataGetterService.GetProductByProductID(productDataUpdate.ProductID);
+           ProductDataResponse? productDataResponse = await _dataGetterService.GetProductByProductID(productDataUpdate.ProductID);
 
             if(productDataResponse == null)
             {
@@ -132,16 +134,16 @@ namespace E_Commerce_Project.Controllers
 
             ValidationHelper.ModelValidation(productDataUpdate);
 
-            ProductDataResponse updatedProduct = _dataUpdateService.UpdateProductData(productDataUpdate);
+            ProductDataResponse updatedProduct = await _dataUpdateService.UpdateProductData(productDataUpdate);
 
             return RedirectToAction("GetAllProduct", "Product");
         }
 
         [HttpGet]
         [Route("{productID}")]
-        public IActionResult DeleteProduct(int productID)
+        public async Task<IActionResult> DeleteProduct(int productID)
         {
-            ProductDataResponse? productDataResponse = _dataGetterService.GetProductByProductID(productID);
+            ProductDataResponse? productDataResponse = await _dataGetterService.GetProductByProductID(productID);
 
             if(productDataResponse == null)
             {
@@ -156,9 +158,9 @@ namespace E_Commerce_Project.Controllers
         [HttpPost]
         [Route("{productID}")]
 
-        public IActionResult DeleteProduct(ProductDataUpdateRequest productDataUpdateRequest)
+        public async Task<IActionResult> DeleteProduct(ProductDataUpdateRequest productDataUpdateRequest)
         {
-            ProductDataResponse? productDataResponse = _dataGetterService.GetProductByProductID(productDataUpdateRequest.ProductID);
+            ProductDataResponse? productDataResponse = await _dataGetterService.GetProductByProductID(productDataUpdateRequest.ProductID);
 
             if (productDataResponse == null)
             {

@@ -9,6 +9,6 @@ namespace ServiceContracts
 {
     public interface IProductDataUpdateService
     {
-        ProductDataResponse UpdateProductData(ProductDataUpdateRequest? productDataUpdateRequest);
+        Task<ProductDataResponse> UpdateProductData(ProductDataUpdateRequest? productDataUpdateRequest);
     }
 }

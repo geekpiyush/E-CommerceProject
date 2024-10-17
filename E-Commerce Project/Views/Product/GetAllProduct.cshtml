@@ -77,11 +77,11 @@
             <h5 class="card-title">@product.ProductName</h5>
                         <p class="card-title"><i class="fa-solid fa-list mr-2"></i>@product.ProductCategory</p>
 
-                        <p class="card-text-price"><i class="fa fa-solid fa-indian-rupee-sign fa-sm mr-2"></i>@product.Price</p>
+                        <p class="card-text-price"><i class="fa fa-solid fa-indian-rupee-sign fa-sm mr-1"></i>@product.Price</p>
 
                         @* <p class="card-text"><i class="fa-solid fa-weight-scale"></i>@product.Quantity</p> *@
 
-                        <p class="card-text-para"><i class="fa fa-info-circle"></i> @product.ProductDescription</p>
+                        <p class="card-text-para"><i class="fa fa-info-circle"></i> @product.ProductDescription &nbsp; @product.Quantity</p>
         </div>
                     <div class="card-btn-container">
                         @if(User.IsInRole("Admin"))

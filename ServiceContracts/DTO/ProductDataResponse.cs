@@ -21,7 +21,7 @@ namespace ServiceContracts.DTO
 
         public string? ProductCategory { get; set; }
 
-        public string Quantity { get; set; }
+        public string? Quantity { get; set; }
 
         public string? ProductImagePath { get; set; }
 
@@ -43,7 +43,8 @@ namespace ServiceContracts.DTO
     {
         public static ProductDataResponse ToProductDataResponse(this ProductData productData)
         {
-            return new ProductDataResponse() { CategoryID = productData.CategoryID, ProductName = productData.ProductName, Price = productData.Price,ProductID = productData.ProductID, Quantity = productData.Quantity,ProductImagePath =  productData.ProductImagePath,ProductDescription = productData.ProductDescription};
+            return new ProductDataResponse() { CategoryID = productData.CategoryID, ProductName = productData.ProductName, Price = productData.Price,ProductID = productData.ProductID, Quantity = productData.Quantity,ProductImagePath =  productData.ProductImagePath,ProductDescription = productData.ProductDescription,ProductCategory = productData.ProductCategory?.CategoryName};
         }
+
     }
 }

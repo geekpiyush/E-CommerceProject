@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Entities.DatabaseContext;
+using RepositoryContracts;
 using ServiceContracts;
 using ServiceContracts.DTO;
 
@@ -7,12 +8,16 @@ namespace Services
 {
     public class ProductCategoryService : IProductCategoryService
     {
-        private readonly ApplicationDbContext _db;
-        public ProductCategoryService(ApplicationDbContext db)
+        private readonly IProductCategoryAdderRepository _categoryAdderRepository;
+        private readonly IProductCategoryGetterRepository _categoryGetterRepository;
+
+        public ProductCategoryService(IProductCategoryAdderRepository productCategoryAdderRepository, IProductCategoryGetterRepository productCategoryGetterRepository)
         {
-                _db = db;
+                _categoryAdderRepository = productCategoryAdderRepository;
+            _categoryGetterRepository = productCategoryGetterRepository;
         }
-        public ProductCategoryResponse AddProductCategory(ProductCategoryAddRequest? productCategoryAddRequest)
+
+        public async Task<ProductCategoryResponse> AddProductCategory(ProductCategoryAddRequest? productCategoryAddRequest)
         {
             if(productCategoryAddRequest == null)
             {
@@ -25,16 +30,17 @@ namespace Services
             }
 
             //check duplicate CategoryName
-            if (_db.ProductCategory.Where(temp => temp.CategoryName == productCategoryAddRequest.CategoryName).Count() >0)
+            if (await _categoryGetterRepository.GetProductCategoryByCategoryName(productCategoryAddRequest.CategoryName) != null)
             {
                 throw new ArgumentException("Given CategoryName Already Exist");
             }
 
             ProductCategory productCategory = productCategoryAddRequest.ToProductCategory();
 
-            _db.ProductCategory.Add(productCategory);
+            await _categoryAdderRepository.AddProductCategory(productCategory);
 
             return productCategory.ToProductCategoryResponse();
         }
+
     }
 }

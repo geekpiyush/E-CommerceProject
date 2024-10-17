@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Entities.DatabaseContext;
+using RepositoryContracts;
 using ServiceContracts;
 using System;
 using System.Collections.Generic;
@@ -11,29 +12,29 @@ namespace Services
 {
     public class ProductDataDeleteService : IProductDataDeleteService
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IProductDataDeleteRepository _dataDeleteRepository;
+        private readonly IProductDataGetterRepository _dataGetterRepository;
 
-        public ProductDataDeleteService(ApplicationDbContext db)
+        public ProductDataDeleteService(IProductDataDeleteRepository productDataDeleteRepository, IProductDataGetterRepository dataGetterRepository)
         {
-            _db = db;
+            _dataDeleteRepository = productDataDeleteRepository;
+            _dataGetterRepository = dataGetterRepository;
         }
-        public bool DeleteProductByProductID(int productID)
+        public async Task<bool> DeleteProductByProductID(int productID)
         {
             if(productID == null)
             {
                 throw new ArgumentNullException(nameof(productID));
             }
 
-            ProductData? matchingProductData = _db.productData.FirstOrDefault(temp=>temp.ProductID == productID);
+            ProductData? matchingProductData = await _dataGetterRepository.GetProductByProductID(productID);
 
             if(matchingProductData == null)
             {
                 throw new ArgumentException("Given productID not exist");
             }
 
-            _db.productData.Remove(matchingProductData);
-            _db.SaveChanges();
-
+            await _dataDeleteRepository.DeleteProductDataByProductID(productID);
             return true;
         }
     }

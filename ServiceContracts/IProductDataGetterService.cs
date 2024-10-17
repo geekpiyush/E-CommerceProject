@@ -10,13 +10,14 @@ namespace ServiceContracts
 {
     public interface IProductDataGetterService
     {
-        List<ProductDataResponse> GetAllProduct();
+        Task<List<ProductDataResponse>> GetAllProduct();
 
-        ProductDataResponse GetProductByProductID(int productID);
+        Task<ProductDataResponse?> GetProductByProductID(int productID);
 
-        List<ProductDataResponse> GetFilterdProduct(string? searchBy,string? searchString);
+        Task<List<ProductDataResponse>> GetFilterdProduct(string? searchBy,string? searchString);
 
         List<ProductDataResponse> GetSortedProduct(List<ProductDataResponse> allProduct, string sortBy, SortOrderOptions sortOrder);
+
 
     }
 }

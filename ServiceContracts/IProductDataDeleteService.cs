@@ -8,6 +8,6 @@ namespace ServiceContracts
 {
     public interface IProductDataDeleteService
     {
-        bool DeleteProductByProductID(int productID);   
+        Task<bool> DeleteProductByProductID(int productID);   
     }
 }

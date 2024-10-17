@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Repositories_;
+using RepositoryContracts;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services;
@@ -35,6 +37,13 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
     .AddUserStore<UserStore<ApplicationUser,ApplicationUserRole,ApplicationDbContext,Guid>>()
     
     .AddRoleStore<RoleStore<ApplicationUserRole,ApplicationDbContext,Guid>>();
+
+builder.Services.AddScoped<IProductCategoryAdderRepository,ProductCategoryAddRepository>();
+builder.Services.AddScoped<IProductCategoryGetterRepository,ProductCategoryGetRepository>();
+builder.Services.AddScoped<IProductDataAdderRepository, ProductDataAddRepository>();
+builder.Services.AddScoped<IProductDataGetterRepository, ProductDataGetRepository>();
+builder.Services.AddScoped<IProductDataUpdateRepository, ProductDataUpdateRepository>();
+builder.Services.AddScoped<IProductDataDeleteRepository, ProductDataDeleteRepository>();
 
 builder.Services.AddScoped<IProductCategoryGetterService ,ProductCategoryGetterService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();

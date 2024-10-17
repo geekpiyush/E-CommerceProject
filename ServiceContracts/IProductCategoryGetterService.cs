@@ -9,8 +9,8 @@ namespace ServiceContracts
 {
     public interface IProductCategoryGetterService
     {
-        List<ProductCategoryResponse> GetAllProductCategories();
+        Task<List<ProductCategoryResponse>>GetAllProductCategories();
 
-        ProductCategoryResponse? GetProductCategoryByCategoryID(int productCategoryID);
+        Task<ProductCategoryResponse?> GetProductCategoryByCategoryID(int productCategoryID);
     }
 }

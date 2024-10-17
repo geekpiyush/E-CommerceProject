@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Entities.DatabaseContext;
 using Entities.ENUM;
+using RepositoryContracts;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using System;
@@ -13,19 +14,21 @@ namespace Services
 {
     public class ProductDataGetterService : IProductDataGetterService
     {
-        private readonly ApplicationDbContext _db;
-        public ProductDataGetterService(ApplicationDbContext db)
+
+        private readonly IProductDataGetterRepository _dataGetterRepository;
+        public ProductDataGetterService(IProductDataGetterRepository productDataGetterRepository)
         {
-            _db = db;
+            _dataGetterRepository = productDataGetterRepository;
         }
-        public List<ProductDataResponse> GetAllProduct()
+        public async Task<List<ProductDataResponse>> GetAllProduct()
         {
-            return _db.productData.Select(temp=>temp.ToProductDataResponse()).ToList();
+             var products = await _dataGetterRepository.GetAllProduct();
+            return products.Select(temp => temp.ToProductDataResponse()).ToList();
         }
 
-        public List<ProductDataResponse> GetFilterdProduct(string? searchBy, string? searchString)
+        public async Task<List<ProductDataResponse>> GetFilterdProduct(string? searchBy, string? searchString)
         {
-            List<ProductDataResponse> allProduct =  GetAllProduct();
+            List<ProductDataResponse> allProduct = await GetAllProduct();
             List<ProductDataResponse> matchingProduct = allProduct;
             if(searchBy == null || searchString == null)
             {
@@ -46,12 +49,12 @@ namespace Services
             return matchingProduct;
         }
 
-        public ProductDataResponse GetProductByProductID(int productID)
+        public async Task<ProductDataResponse?> GetProductByProductID(int productID)
         {
             if (productID == null)
                 return null;
 
-            ProductData? productData = _db.productData.FirstOrDefault(temp=> temp.ProductID == productID);
+            ProductData? productData = await _dataGetterRepository.GetProductByProductID(productID);
 
             if(productData == null)
             {

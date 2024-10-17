@@ -29,9 +29,9 @@
         <label for="CategoryID">Category</label>
         <select class="form-select" id="Category" name="CategoryID" required>
             <option value="" selected disabled>Choose Category</option>
-           @foreach(ProductCategoryResponse productCategory in ViewBag.ProductCategory)
+           @foreach(SelectListItem productCategory in ViewBag.ProductCategory)
            {
-               <option value="@productCategory.CategoryID">@productCategory.CategoryName</option>
+               <option value="@productCategory.Value">@productCategory.Text</option>
            }
         </select>
         <div class="invalid-feedback">

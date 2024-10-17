@@ -9,6 +9,6 @@ namespace ServiceContracts
 {
     public interface IProductCategoryService
     {
-        ProductCategoryResponse AddProductCategory(ProductCategoryAddRequest? productCategoryAddRequest);
+        Task<ProductCategoryResponse> AddProductCategory(ProductCategoryAddRequest? productCategoryAddRequest);
     }
 }

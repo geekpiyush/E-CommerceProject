@@ -9,6 +9,6 @@ namespace ServiceContracts
 {
     public interface IProductDataAddService
     {
-        ProductDataResponse AddProduct(ProductDataAddRequest productDataAddRequest);
+        Task<ProductDataResponse> AddProduct(ProductDataAddRequest productDataAddRequest);
     }
 }
