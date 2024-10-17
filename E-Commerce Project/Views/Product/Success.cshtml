@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Payment Successful";
+}
+
+
+<div class="container mt-5">
+    <h1 class="text-success">Payment Successful!</h1>
+    <p>Thank you for your purchase.</p>
+    <p>Your order has been successfully placed.</p>
+
+    <h4>Order Details:</h4>
+    <p>
+        <strong>Order ID:</strong> @ViewBag.OrderID<br />
+        <strong>Total Amount:</strong> ₹@ViewBag.TotalAmount<br />
+        <strong>Status:</strong> Completed
+    </p>
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Return to Home</a>
+</div>

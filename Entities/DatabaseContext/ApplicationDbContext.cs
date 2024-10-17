@@ -21,6 +21,7 @@ namespace Entities.DatabaseContext
 
        public DbSet<ProductData> productData { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
+        public DbSet<Orders> Orders { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,6 +29,7 @@ namespace Entities.DatabaseContext
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ProductData>().ToTable("ProductData");
             modelBuilder.Entity<ProductCategory>().ToTable("ProductCategory");
+            modelBuilder.Entity<Orders>().ToTable("Orders");
 
             //seed data
 
@@ -61,6 +63,12 @@ namespace Entities.DatabaseContext
                     .HasForeignKey(p => p.CategoryID);
                 });
 
+            modelBuilder.Entity<Orders>(entity =>
+            {
+                entity.HasOne<ProductData>(c => c.ProductData)
+                .WithMany(p => p.Orders)
+                .HasForeignKey(p => p.ProductID);
+            });
         }
     }
 }

@@ -25,5 +25,6 @@ namespace Entities
 
         public string? ProductDescription {  get; set; }
 
+        public virtual ICollection<Orders>? Orders { get; set; }
     }
 }

@@ -44,6 +44,8 @@ builder.Services.AddScoped<IProductDataAdderRepository, ProductDataAddRepository
 builder.Services.AddScoped<IProductDataGetterRepository, ProductDataGetRepository>();
 builder.Services.AddScoped<IProductDataUpdateRepository, ProductDataUpdateRepository>();
 builder.Services.AddScoped<IProductDataDeleteRepository, ProductDataDeleteRepository>();
+builder.Services.AddScoped<IOrderAddRepository, OrderAddRepository>();
+builder.Services.AddScoped<IOrderGetRepository, OrderGetRepository>();
 
 builder.Services.AddScoped<IProductCategoryGetterService ,ProductCategoryGetterService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
@@ -51,6 +53,7 @@ builder.Services.AddScoped<IProductDataAddService , ProductDataAdderServie>();
 builder.Services.AddScoped<IProductDataGetterService , ProductDataGetterService>();
 builder.Services.AddScoped<IProductDataDeleteService , ProductDataDeleteService>();
 builder.Services.AddScoped<IProductDataUpdateService , ProductDataUpdateService>();
+builder.Services.AddScoped<IOrderService , OrderService>();
 
 builder.Services.AddAuthorization(options =>
 {

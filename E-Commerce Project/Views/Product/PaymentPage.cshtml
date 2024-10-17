@@ -1,0 +1,48 @@
+﻿@model OrderResponse
+@{
+    ViewBag.Title = "Perfume | Payment Page";
+}
+
+<form id="payment-form" asp-controller="Product" asp-action="PaymentCallback" method="POST">
+    <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id" />
+    <input type="hidden" name="razorpay_order_id" id="razorpay_order_id" />
+    <input type="hidden" name="razorpay_signature" id="razorpay_signature" />
+
+    <input type="hidden" name="product_id" value="@Model.ProductID" />
+    <input type="text" name="first_name" placeholder="First Name" required />
+    <input type="text" name="last_name" placeholder="Last Name" required />
+    <input type="text" name="address" placeholder="Address" required />
+    <input type="text" name="city" placeholder="City" required />
+    <input type="text" name="country" placeholder="Country" required />
+    <input type="text" name="postal_code" placeholder="Postal Code" required />
+    <input type="number" name="quantity" placeholder="Quantity" required />
+    <input type="hidden" name="total_amount" value="999.99" />
+</form>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<button id="rzp-button1">Pay Now</button>
+<script>
+    var options = {
+        "key": "@Model.RazorpayKey",
+        "TotalPrice": "@Model.TotalPrice",
+        "currency": "@Model.Currency",
+        "name": "Your Store",
+        "description": "Product Purchase",
+        "order_id": "@Model.OrderID",
+        "handler": function (response) {
+            document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+            document.getElementById('razorpay_order_id').value = response.razorpay_order_id;
+            document.getElementById('razorpay_signature').value = response.razorpay_signature;
+            document.getElementById('payment-form').submit();
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp-button1').onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+
+
+

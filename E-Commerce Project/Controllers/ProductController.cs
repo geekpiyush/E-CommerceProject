@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Razorpay.Api;
+using RepositoryContracts;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services.Helpers;
@@ -13,7 +15,7 @@ using Services.Helpers;
 namespace E_Commerce_Project.Controllers
 {
     [Route("[controller]/[action]")]
-    [AllowAnonymous]
+    
     public class ProductController : Controller
     {
         private readonly IProductDataAddService _dataAddService;
@@ -21,9 +23,11 @@ namespace E_Commerce_Project.Controllers
         private readonly IProductDataUpdateService _dataUpdateService;
         private readonly IProductDataDeleteService _dataDeleteService;
         private readonly IProductCategoryGetterService _categoryService;
+        private readonly IOrderService _orderService;
         private readonly ApplicationDbContext _db;
+        private readonly IConfiguration _configuration;
 
-        public ProductController(ApplicationDbContext db, IProductDataAddService productDataAddService, IProductDataGetterService productDataGetterService, IProductDataUpdateService productDataUpdateService, IProductDataDeleteService productDataDeleteService, IProductCategoryGetterService categoryService)
+        public ProductController(ApplicationDbContext db, IProductDataAddService productDataAddService, IProductDataGetterService productDataGetterService, IProductDataUpdateService productDataUpdateService, IProductDataDeleteService productDataDeleteService, IProductCategoryGetterService categoryService, IConfiguration configuration,IOrderService orderService)
         {
             _dataAddService = productDataAddService;
             _dataGetterService = productDataGetterService;
@@ -31,9 +35,10 @@ namespace E_Commerce_Project.Controllers
             _dataDeleteService = productDataDeleteService;
             _categoryService = categoryService;
             _db = db;
-
+            _configuration = configuration;
+            _orderService = orderService;
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllProduct(string searchBy, string? searchString, string sortBy = nameof(ProductDataResponse.ProductName),SortOrderOptions sortOrder = SortOrderOptions.ASC)
         {
 
@@ -72,7 +77,7 @@ namespace E_Commerce_Project.Controllers
 
             return View(sortedProduct);
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> AddProduct()
         {
             List<ProductCategoryResponse> productCategoryResponses = await _categoryService.GetAllProductCategories();
@@ -80,7 +85,7 @@ namespace E_Commerce_Project.Controllers
             ViewBag.ProductCategory = productCategoryResponses.Select(temp => new SelectListItem() { Text = temp.CategoryName, Value = temp.CategoryID.ToString()});
             return View();
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddProduct(ProductDataAddRequest productDataAddRequest)
         {
@@ -101,6 +106,7 @@ namespace E_Commerce_Project.Controllers
             return RedirectToAction("GetAllProduct", "Product");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("{productID}")]
         public async Task<IActionResult> UpdateProduct(int productID)
@@ -121,6 +127,7 @@ namespace E_Commerce_Project.Controllers
             return View(productDataUpdate);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("{productID}")]
         public async Task<IActionResult> UpdateProduct(ProductDataUpdateRequest productDataUpdate)
@@ -140,6 +147,7 @@ namespace E_Commerce_Project.Controllers
             return RedirectToAction("GetAllProduct", "Product");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("{productID}")]
         public async Task<IActionResult> DeleteProduct(int productID)
@@ -155,7 +163,7 @@ namespace E_Commerce_Project.Controllers
             return View(productDataResponse);
         }
 
-
+        [AllowAnonymous]
         [HttpPost]
         [Route("{productID}")]
 
@@ -169,11 +177,12 @@ namespace E_Commerce_Project.Controllers
                 return RedirectToAction("GetAllProduct", "Product");
             }
 
-             _dataDeleteService.DeleteProductByProductID(productDataUpdateRequest.ProductID);
+             await _dataDeleteService.DeleteProductByProductID(productDataUpdateRequest.ProductID);
 
             return RedirectToAction("GetAllProduct", "Product");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult>BuyNow(int productId)
         {
@@ -186,6 +195,98 @@ namespace E_Commerce_Project.Controllers
 
             // Pass the product details to the view
             return View(product); 
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CompletePurchase(OrderRequest orderRequest)
+        {
+            // Fetch product details by ProductID
+            var product = await _dataGetterService.GetProductByProductID(orderRequest.ProductID);
+            if (product == null)
+            {
+                return NotFound(); // Handle product not found case
+            }
+
+            // Calculate total price
+            var totalPrice = product.Price * orderRequest.Quantity;
+
+            // Get Razorpay key and secret from configuration
+            var razorpayKey = _configuration["Razorpay:Key"];
+            var razorpaySecret = _configuration["Razorpay:Secret"];
+
+            // Step 1: Create a Razorpay Order
+            var options = new Dictionary<string, object>();
+            options.Add("amount", totalPrice * 100); // Amount in paise (1 INR = 100 paise)
+            options.Add("currency", "INR");
+            options.Add("receipt", "order_rcptid_11");
+
+            RazorpayClient client = new RazorpayClient(razorpayKey, razorpaySecret);
+            Razorpay.Api.Order razorpayOrder = client.Order.Create(options);
+
+            // Prepare response to send back
+            var orderResponse = new OrderResponse
+            {
+                OrderID = razorpayOrder["id"],
+                TotalPrice = totalPrice,
+                Currency = "INR",
+                RazorpayKey = razorpayKey,
+                ProductID = orderRequest.ProductID
+            };
+
+            // Render PaymentPage to show Razorpay checkout form
+            return View("PaymentPage", orderResponse); 
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult PaymentCallback(IFormCollection form)
+        {
+            string paymentId = form["razorpay_payment_id"];
+            string orderId = form["razorpay_order_id"];
+            string signature = form["razorpay_signature"];
+
+            // Retrieve the Razorpay secret from appsettings.json
+            var key = _configuration["Razorpay:Secret"];
+
+            // Verify the payment signature with Razorpay
+            string expectedSignature = Services.Helpers.Utils.GenerateSignature(orderId, paymentId, key);
+
+            if (expectedSignature.Equals(signature))
+            {
+                // Payment is successful, store the order in the database
+                var order = new Entities.Orders
+                {
+                    OrderID = orderId,
+                    ProductID = Convert.ToInt32(form["product_id"]),
+                    FirstName = form["first_name"],
+                    LastName = form["last_name"],
+                    Address = form["address"],
+                    City = form["city"],
+                    Country = form["country"],
+                    PostalCode = form["postal_code"],
+                    Quantity = Convert.ToInt32(form["quantity"]),
+                    TotalPrice = Convert.ToDouble(form["total_amount"]),
+                    OrderStatus = "Completed"
+
+
+                };
+
+                // Add order to database
+                _db.Orders.Add(order);
+                _db.SaveChanges();
+
+                ViewBag.OrderID = order.OrderID; // Ensure you have an OrderID in your order model
+                ViewBag.TotalAmount = order.TotalPrice;
+
+                // Redirect to success page
+                return View("Success");
+            }
+            else
+            {
+                // Payment failed, show failure page
+                return View("PaymentFailed");
+            }
         }
     }
 }
