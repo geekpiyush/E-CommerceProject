@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services.Helpers;
@@ -171,6 +172,20 @@ namespace E_Commerce_Project.Controllers
              _dataDeleteService.DeleteProductByProductID(productDataUpdateRequest.ProductID);
 
             return RedirectToAction("GetAllProduct", "Product");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult>BuyNow(int productId)
+        {
+            // You can fetch product details or any necessary data based on productId
+            var product = await _dataGetterService.GetProductByProductID(productId);
+            if (product == null)
+            {
+                return NotFound(); // Or redirect to an error page
+            }
+
+            // Pass the product details to the view
+            return View(product); 
         }
     }
 }

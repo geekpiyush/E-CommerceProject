@@ -1,0 +1,35 @@
+﻿/* buynow.css */
+
+.shopping-cart-container {
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.cart-content {
+    display: flex;
+    justify-content: space-between; /* Space between columns */
+}
+
+.cart-left-column,
+.cart-right-column {
+    flex: 1; /* Allows columns to grow equally */
+    margin: 10px; /* Space between columns */
+    padding: 20px;
+    border: 1px solid #ccc; /* Optional: adds border around columns */
+    border-radius: 5px; /* Optional: adds rounded corners */
+    background-color: #f9f9f9; /* Optional: adds background color */
+}
+
+.cart-left-column {
+    max-width: 45%; /* Limit the width of the left column */
+}
+
+.cart-right-column {
+    max-width: 45%; /* Limit the width of the right column */
+}
+
+.order-product-summary img {
+    width: 100%; /* Full width for the image */
+    height: auto; /* Maintain aspect ratio */
+}
