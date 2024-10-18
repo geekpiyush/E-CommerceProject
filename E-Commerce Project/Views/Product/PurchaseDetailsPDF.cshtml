@@ -1,0 +1,29 @@
+﻿@model Orders
+@{
+    Layout = null;
+}
+
+<h2>Purchase Detail</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Order Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.OrderID</td>
+            <td>@Model.ProductData?.ProductName</td>
+            <td>@Model.Quantity</td>
+            <td>@Model.TotalPrice</td>
+            <td>@Model.OrderDate.ToShortDateString()</td>
+            <td>@Model.OrderStatus</td>
+        </tr>
+    </tbody>
+</table>

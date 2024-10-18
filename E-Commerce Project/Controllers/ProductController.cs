@@ -9,6 +9,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Razorpay.Api;
 using RepositoryContracts;
+using Rotativa.AspNetCore;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services.Helpers;
@@ -305,6 +306,23 @@ namespace E_Commerce_Project.Controllers
                 .ToListAsync();
 
             return View(orders);
+        }
+
+        public IActionResult PurchaseDetailsPDF(string orderId)
+        {
+            var order = _db.Orders.Include(o => o.ProductData) // Include any necessary navigation properties
+                .FirstOrDefault(o => o.OrderID == orderId);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return new ViewAsPdf("PurchaseDetailsPDF", order, ViewData)
+            {
+                PageMargins = new Rotativa.AspNetCore.Options.Margins() { Top = 20, Right = 20, Bottom = 20, Left = 20 },
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
+            };
         }
 
     }
