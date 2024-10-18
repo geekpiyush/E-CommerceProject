@@ -68,7 +68,18 @@ namespace Entities.DatabaseContext
                 entity.HasOne<ProductData>(c => c.ProductData)
                 .WithMany(p => p.Orders)
                 .HasForeignKey(p => p.ProductID);
+
+                
             });
+            // Foreign key configuration
+            modelBuilder.Entity<Orders>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
         }
     }
 }

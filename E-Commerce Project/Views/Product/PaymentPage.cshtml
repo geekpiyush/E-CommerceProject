@@ -16,7 +16,7 @@
     <input type="text" name="country" placeholder="Country" required />
     <input type="text" name="postal_code" placeholder="Postal Code" required />
     <input type="number" name="quantity" placeholder="Quantity" required />
-    <input type="hidden" name="total_amount" value="999.99" />
+    <input type="hidden" name="total_amount" value="@Model.TotalPrice" />
 </form>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

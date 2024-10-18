@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -47,6 +49,11 @@ namespace Entities
 
         [Required(ErrorMessage = "OrderStatus Name Can't Be Blank")]
         public string? OrderStatus { get; set; } = "Pending"; // Example status
+
+        [ForeignKey("User")]
+        public Guid? UserId { get; set; } // Nullable if existing orders might not have a UserId
+
+        public virtual ApplicationUser? User { get; set; } // Navigation property
     }
 
 }

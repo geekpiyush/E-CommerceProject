@@ -10,5 +10,7 @@ namespace Entities.Identity
     public class ApplicationUser : IdentityUser<Guid>
     {
         public string? CustomerName {  get; set; }
+
+        public virtual ICollection<Orders> Orders { get; set; } = new List<Orders>();
     }
 }

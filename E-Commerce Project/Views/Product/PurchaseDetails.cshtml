@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Entities.Orders>
+@{
+    ViewBag.Title = "Perfume | Purchase Details";
+}
+
+<h2>Purchase Details</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Order Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderID</td>
+                    <td>@order.ProductData?.ProductName</td>
+                    <td>@order.Quantity</td>
+                    <td>@order.TotalPrice</td>
+                    <td>@order.OrderDate.ToShortDateString()</td>
+                    <td>@order.OrderStatus</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">No purchase details available.</td>
+            </tr>
+        }
+    </tbody>
+</table>

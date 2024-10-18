@@ -58,6 +58,8 @@
                     <div class="dropdown-menu" aria-labelledby="accountDropdown">
                         @if (User.Identity.IsAuthenticated)
                         {
+                            <a class="dropdown-item" asp-controller="Product" asp-action="PurchaseDetails"><i class="fa-solid fa-file-invoice mr-2"></i>Purchase Details</a>
+
                             <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><i class="fa-solid fa-right-from-bracket mr-2"></i>Logout</a>
                         }
                         else

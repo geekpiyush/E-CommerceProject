@@ -2,6 +2,7 @@
 using Entities.ENUM;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -11,6 +12,7 @@ using RepositoryContracts;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services.Helpers;
+using System.Security.Claims;
 
 namespace E_Commerce_Project.Controllers
 {
@@ -288,5 +290,23 @@ namespace E_Commerce_Project.Controllers
                 return View("PaymentFailed");
             }
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> PurchaseDetails()
+        {
+            // Get the logged-in user's Id
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Fetch all orders for this user
+            var orders = await _db.Orders
+                .Where(o => o.UserId.ToString() == userId) // Ensure UserId is compared correctly
+                .Include(o => o.ProductData) // Include product data if needed
+                .ToListAsync();
+
+            return View(orders);
+        }
+
     }
 }
+
