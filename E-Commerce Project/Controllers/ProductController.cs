@@ -270,7 +270,8 @@ namespace E_Commerce_Project.Controllers
                     PostalCode = form["postal_code"],
                     Quantity = Convert.ToInt32(form["quantity"]),
                     TotalPrice = Convert.ToDouble(form["total_amount"]),
-                    OrderStatus = "Completed"
+                    OrderStatus = "Completed",
+                    UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
 
 
                 };
@@ -296,16 +297,16 @@ namespace E_Commerce_Project.Controllers
         [HttpGet]
         public async Task<IActionResult> PurchaseDetails()
         {
-            // Get the logged-in user's Id
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             // Fetch all orders for this user
             var orders = await _db.Orders
-                .Where(o => o.UserId.ToString() == userId) // Ensure UserId is compared correctly
+                .Where(o => o.UserId.ToString() == userId)
                 .Include(o => o.ProductData) // Include product data if needed
                 .ToListAsync();
 
-            return View(orders);
+            // Return an empty list if no orders are found
+            return View(orders ?? new List<Entities.Orders>());
         }
 
         public IActionResult PurchaseDetailsPDF(string orderId)
@@ -321,7 +322,7 @@ namespace E_Commerce_Project.Controllers
             return new ViewAsPdf("PurchaseDetailsPDF", order, ViewData)
             {
                 PageMargins = new Rotativa.AspNetCore.Options.Margins() { Top = 20, Right = 20, Bottom = 20, Left = 20 },
-                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Portrait,
             };
         }
 

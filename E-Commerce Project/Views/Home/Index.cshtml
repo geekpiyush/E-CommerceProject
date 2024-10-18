@@ -1,14 +1,16 @@
-﻿@{
+﻿@model IEnumerable<ProductCategory>
+@{
     ViewBag.Title = "Perfume | Home";
 
-    List<ProductCategory> categories = new List<ProductCategory>()
-    {
-        new ProductCategory(){CategoryID=9001,CategoryName="Base"},
-        new ProductCategory(){CategoryID=9002,CategoryName="Medium"},
-        new ProductCategory(){CategoryID=9003,CategoryName="High"},
-    };
+    // List<ProductCategory> categories = new List<ProductCategory>()
+    // {
+    //     new ProductCategory(){CategoryID=9001,CategoryName="Base"},
+    //     new ProductCategory(){CategoryID=9002,CategoryName="Medium"},
+    //     new ProductCategory(){CategoryID=9003,CategoryName="High"},
+    // };
 }
 
 <partial name="_BannerPartialView"></partial>
-@await Html.PartialAsync("_TopCategoryPartialView",categories);
+@await Html.PartialAsync("_TopCategoryPartialView",Model);
 
+<partial name="_TrendingPerfumePartialView"></partial>

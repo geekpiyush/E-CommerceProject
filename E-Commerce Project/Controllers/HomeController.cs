@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Entities.DatabaseContext;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_Commerce_Project.Controllers
 {
@@ -7,10 +9,16 @@ namespace E_Commerce_Project.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        [Route("/")]
-        public IActionResult Index()
+        private readonly ApplicationDbContext _db;
+        public HomeController(ApplicationDbContext db)
         {
-            return View();
+            _db = db;
+        }
+        [Route("/")]
+        public async Task<IActionResult> Index()
+        {
+            var categories = await _db.ProductCategory.ToListAsync();
+            return View(categories);
 
         }
     }
