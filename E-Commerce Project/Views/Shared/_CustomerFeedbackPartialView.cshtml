@@ -1,0 +1,179 @@
+﻿<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .feedback-section {
+        background-color: #f3f3f3;
+        padding: 60px 0;
+        text-align: center;
+    }
+
+        .feedback-section h2 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+    .feedback-slider {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .feedback-item {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+        .feedback-item p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .feedback-item .customer-info {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .feedback-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .feedback-item h5 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .feedback-item .rating i {
+            color: #ffc107;
+            font-size: 20px;
+            margin-right: 5px;
+        }
+
+    /* Controls for Slider */
+    .carousel-control-prev, .carousel-control-next {
+        color: #333;
+        width: 50px;
+    }
+
+        .carousel-control-prev i, .carousel-control-next i {
+            font-size: 24px;
+        }
+
+    .carousel-indicators {
+        position: static;
+        margin-top: 20px;
+    }
+
+        .carousel-indicators li {
+            background-color: #555;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+        }
+
+        .carousel-indicators .active {
+            background-color: #ffc107;
+        }
+
+</style>
+
+<!-- Customer Feedback Section -->
+<section class="feedback-section">
+    <div class="container">
+        <h2>What Our Customers Say</h2>
+        <div id="feedbackCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#feedbackCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#feedbackCarousel" data-slide-to="1"></li>
+                <li data-target="#feedbackCarousel" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Feedback Items -->
+            <div class="carousel-inner feedback-slider">
+                <!-- First Feedback -->
+                <div class="carousel-item active">
+                    <div class="feedback-item">
+                        <p>"ThemeVolty has been a game-changer for my business! Their team is amazing, and the designs are top-notch."</p>
+                        <div class="customer-info">
+                            <img src="https://via.placeholder.com/60" alt="Customer 1">
+                            <div>
+                                <h5>John Doe</h5>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Second Feedback -->
+                <div class="carousel-item">
+                    <div class="feedback-item">
+                        <p>"Outstanding service and a great team! They really listened to my needs and delivered beyond expectations."</p>
+                        <div class="customer-info">
+                            <img src="https://via.placeholder.com/60" alt="Customer 2">
+                            <div>
+                                <h5>Jane Smith</h5>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Third Feedback -->
+                <div class="carousel-item">
+                    <div class="feedback-item">
+                        <p>"I was really impressed with their professionalism and the quality of work delivered. Highly recommended!"</p>
+                        <div class="customer-info">
+                            <img src="https://via.placeholder.com/60" alt="Customer 3" >
+                            <div>
+                                <h5>Emily Johnson</h5>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="carousel-control-prev" href="#feedbackCarousel" role="button" data-slide="prev">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+            <a class="carousel-control-next" href="#feedbackCarousel" role="button" data-slide="next">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

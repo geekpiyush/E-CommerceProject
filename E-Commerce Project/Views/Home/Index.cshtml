@@ -9,8 +9,19 @@
     //     new ProductCategory(){CategoryID=9003,CategoryName="High"},
     // };
 }
-
+<style>
+    body {
+        overflow-x: hidden; 
+    }
+</style>
 <partial name="_BannerPartialView"></partial>
 @await Html.PartialAsync("_TopCategoryPartialView",Model);
 
 <partial name="_TrendingPerfumePartialView"></partial>
+
+<partial name="_StripPartialView"></partial>
+
+<partial name="_CustomerFeedbackPartialView"></partial>
+
+
+
