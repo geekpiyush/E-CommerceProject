@@ -1,0 +1,163 @@
+﻿<style>
+    .trend-products-section {
+        background-color: #f8f8f8;
+        padding: 50px 0;
+    }
+
+    .discount-banner {
+        background-color: #f8f8f8;
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px; /* Optional: To make the corners slightly rounded */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    }
+
+        .discount-banner img {
+            width: 100%;
+            max-width: 200px;
+            margin-bottom: 15px;
+        }
+
+    .product-card {
+        border: 1px solid #ebebeb;
+        padding: 15px;
+        text-align: center;
+        background-color: #fff;
+    }
+
+        .product-card img {
+            width: 100%;
+            max-width: 150px;
+            margin-bottom: 15px;
+        }
+
+    .badge-sale {
+        background-color: #ff4500;
+        color: white;
+        font-size: 0.8rem;
+        position: absolute;
+        top: 15px;
+        left: 15px;
+    }
+
+    .badge-discount {
+        background-color: #6f42c1;
+        color: white;
+        font-size: 0.8rem;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .product-price {
+        color: #ff4500;
+        font-size: 1.2rem;
+    }
+
+    .original-price {
+        text-decoration: line-through;
+        color: #999;
+    }
+
+    .timer {
+        font-size: 0.9rem;
+        margin-top: 10px;
+        color: #333;
+    }
+
+    .stars {
+        margin-top: 10px;
+        color: gold;
+    }
+</style>
+<section class="trend-products-section">
+    <div class="container">
+        <div class="row">
+            <!-- Discount Banner -->
+            <div class="col-lg-3">
+                <div class="discount-banner">
+                    <h3>Up To 50% Off</h3>
+                    <p>On Online Order</p>
+                    <img src="~/images/productimages/37066d7d-e408-4ca6-88a8-7a65902a6ec1_perfume-1.jpg" width="200" height="200" alt="Discount Banner Image">
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div class="col-lg-9">
+                <h2 class="text-center">Special Trend Products</h2>
+                <div class="row">
+                    <!-- Product 1 -->
+                    <div class="col-md-6">
+                        <div class="product-card position-relative">
+                            <span class="badge badge-sale">ONLINE ONLY<br>NEW<br>ON SALE!</span>
+                            <span class="badge badge-discount">-20%</span>
+                            <img src="~/images/productimages/product-jpeg.jpg" alt=" Enigma Noir" width="150" height="200">
+                            <h5 class="product-title">ENIGMA NOIR</h5>
+                            <div class="product-price">₹399.12 <span class="original-price">₹999.00</span></div>
+                            <div class="timer" data-end-time="2024-12-31T23:59:59">
+                                <i class="fas fa-clock"></i><span class="countdown">Loading...</span> 
+                            </div>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="col-md-6">
+                        <div class="product-card position-relative">
+                            <span class="badge badge-sale">ONLINE ONLY<br>NEW<br>ON SALE!</span>
+                            <span class="badge badge-discount">-25%</span>
+                            <img src="~/images/productimages/f676e654-4f58-4972-8d5d-d02772a76ca5_perfume-1.jpg" width="150" height="200" alt="Sensual Silk">
+                            <h5 class="product-title">SENSUAL SILK</h5>
+                            <div class="product-price">₹399.50 <span class="original-price">₹1199.00</span></div>
+                            <div class="timer" data-end-time="2024-11-01T12:00:00">
+                                <i class="fas fa-clock"></i> <span class="countdown">Loading...</span>
+                            </div>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function startCountdown() {
+        // Select all timer elements
+        const timers = document.querySelectorAll('.timer');
+
+        // Loop through each timer element
+        timers.forEach(timer => {
+            // Get the end time from the data attribute
+            const endTime = new Date(timer.getAttribute('data-end-time')).getTime();
+
+            // Create a unique interval for each timer
+            const countdownInterval = setInterval(() => {
+                // Get the current time
+                const now = new Date().getTime();
+
+                // Calculate the time difference between now and the end time
+                const timeDifference = endTime - now;
+
+                // Calculate the time components (days, hours, minutes, seconds)
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                // Update the countdown display for this specific timer
+                const countdownDisplay = timer.querySelector('.countdown');
+                countdownDisplay.innerHTML = `${ days } days ${ hours } hrs ${ minutes } mins ${ seconds } secs`;
+
+                // If the countdown reaches zero, stop the timer and display "EXPIRED"
+                if (timeDifference < 0) {
+                    clearInterval(countdownInterval);
+                    countdownDisplay.innerHTML = "EXPIRED";
+                }
+            }, 1000); // Update every second
+        });
+    }
+
+    // Start the countdown function
+    startCountdown();
+</script>
