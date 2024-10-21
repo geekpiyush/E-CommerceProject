@@ -185,6 +185,17 @@ namespace E_Commerce_Project.Controllers
             return RedirectToAction("GetAllProduct", "Product");
         }
 
+        [HttpGet]
+        public async Task<IActionResult>ProductDetails()
+        {
+            //var product = await _dataGetterService.GetProductByProductID(productId);
+            //if (product == null)
+            //{
+            //    return NotFound(); // Or redirect to an error page
+            //}
+            return View();
+        }
+
         [Authorize]
         [HttpGet]
         public async Task<IActionResult>BuyNow(int productId)
@@ -200,8 +211,10 @@ namespace E_Commerce_Project.Controllers
             return View(product); 
         }
 
+
         [Authorize]
         [HttpPost]
+
         public async Task<IActionResult> CompletePurchase(OrderRequest orderRequest)
         {
             // Fetch product details by ProductID

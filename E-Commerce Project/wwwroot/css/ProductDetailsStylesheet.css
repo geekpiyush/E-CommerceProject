@@ -1,0 +1,41 @@
+﻿body {
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.inner-container{
+    display:flex;
+    align-items:center;
+    justify-content:space-evenly;
+}
+.left-side-image-container img{
+    width:40vw;
+}
+#quantity{
+    width:5vw;
+}
+.MRP-container{
+    display:inline-block;
+}
+.quantity-container{
+    float:right;
+}
+button {
+    width: 100%;
+    border: none;
+    height: 5vh;
+    background-color: #C22323;
+    color:white;
+    border-radius:10px;
+}
+.ProductPoints{
+    margin-top:20px;
+}
+.ProductPoints span{
+    display:block;
+    margin-top:10px;
+}
