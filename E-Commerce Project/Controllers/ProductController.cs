@@ -186,19 +186,7 @@ namespace E_Commerce_Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult>ProductDetails()
-        {
-            //var product = await _dataGetterService.GetProductByProductID(productId);
-            //if (product == null)
-            //{
-            //    return NotFound(); // Or redirect to an error page
-            //}
-            return View();
-        }
-
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult>BuyNow(int productId)
+        public async Task<IActionResult>ProductDetails(int productId)
         {
             // You can fetch product details or any necessary data based on productId
             var product = await _dataGetterService.GetProductByProductID(productId);
@@ -208,7 +196,22 @@ namespace E_Commerce_Project.Controllers
             }
 
             // Pass the product details to the view
-            return View(product); 
+            return View(product);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> BuyNow(int productId)
+        {
+            // You can fetch product details or any necessary data based on productId
+            var product = await _dataGetterService.GetProductByProductID(productId);
+            if (product == null)
+            {
+                return NotFound(); // Or redirect to an error page
+            }
+
+            // Pass the product details to the view
+            return View(product);
         }
 
 
@@ -247,7 +250,12 @@ namespace E_Commerce_Project.Controllers
                 TotalPrice = totalPrice,
                 Currency = "INR",
                 RazorpayKey = razorpayKey,
-                ProductID = orderRequest.ProductID
+                ProductID = orderRequest.ProductID,
+                ProductImagePath = product.ProductImagePath, // Add product image path to model
+                ProductName = product.ProductName, // Add product name to model
+                ProductDescription = product.ProductDescription, // Add description to model
+                Quantity = orderRequest.Quantity
+
             };
 
             // Render PaymentPage to show Razorpay checkout form

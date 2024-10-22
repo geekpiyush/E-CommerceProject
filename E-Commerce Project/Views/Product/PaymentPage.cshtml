@@ -3,31 +3,61 @@
     ViewBag.Title = "Perfume | Payment Page";
 }
 
-<form id="payment-form" asp-controller="Product" asp-action="PaymentCallback" method="POST">
-    <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id" />
-    <input type="hidden" name="razorpay_order_id" id="razorpay_order_id" />
-    <input type="hidden" name="razorpay_signature" id="razorpay_signature" />
+<div id="main-container" style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <!-- Left Side: Product Information -->
+    <div class="left-side" style="flex: 1; padding-right: 20px;">
+        <div class="product-image-container">
+            <img src="@Model.ProductImagePath" alt="@Model.ProductName" style="max-width: 100%; height: auto;" />
+        </div>
+        <div class="product-details-container">
+            <h2>@Model.ProductName</h2>
+            <p>@Model.ProductDescription</p>
+            <p>Total Amount: <strong>₹@Model.TotalPrice</strong></p>
+            <p>Quantity: <strong>@Model.Quantity</strong></p>
+        </div>
+    </div>
 
-    <input type="hidden" name="product_id" value="@Model.ProductID" />
-    <input type="text" name="first_name" placeholder="First Name" required />
-    <input type="text" name="last_name" placeholder="Last Name" required />
-    <input type="text" name="address" placeholder="Address" required />
-    <input type="text" name="city" placeholder="City" required />
-    <input type="text" name="country" placeholder="Country" required />
-    <input type="text" name="postal_code" placeholder="Postal Code" required />
-    <input type="number" name="quantity" placeholder="Quantity" required />
-    <input type="hidden" name="total_amount" value="@Model.TotalPrice" />
-</form>
+    <!-- Right Side: Form -->
+    <div class="right-side" style="flex: 1; padding-left: 20px;">
+        <form id="payment-form" asp-controller="Product" asp-action="PaymentCallback" method="POST">
+            <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id" />
+            <input type="hidden" name="razorpay_order_id" id="razorpay_order_id" />
+            <input type="hidden" name="razorpay_signature" id="razorpay_signature" />
+
+            <input type="hidden" name="product_id" value="@Model.ProductID" />
+            <input type="hidden" name="total_amount" value="@Model.TotalPrice" />
+
+            <div class="form-group">
+                <input type="text" name="first_name" placeholder="First Name" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <input type="text" name="last_name" placeholder="Last Name" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <input type="text" name="address" placeholder="Address" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <input type="text" name="city" placeholder="City" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <input type="text" name="country" placeholder="Country" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <input type="text" name="postal_code" placeholder="Postal Code" class="form-control" required />
+            </div>
+
+            <button id="rzp-button1" class="btn btn-primary">Pay Now</button>
+        </form>
+    </div>
+</div>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<button id="rzp-button1">Pay Now</button>
 <script>
     var options = {
         "key": "@Model.RazorpayKey",
-        "TotalPrice": "@Model.TotalPrice",
+        "amount": "@(Model.TotalPrice * 100)", // Amount is in paise
         "currency": "@Model.Currency",
-        "name": "Your Store",
+        "name": "Heart's Desire",
         "description": "Product Purchase",
         "order_id": "@Model.OrderID",
         "handler": function (response) {
@@ -43,6 +73,3 @@
         e.preventDefault();
     }
 </script>
-
-
-

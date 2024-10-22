@@ -1,20 +1,26 @@
-﻿<link href="~/css/productdetailsstylesheet.css" rel="stylesheet" />
-
+﻿
+<link href="~/css/productdetailsstylesheet.css" rel="stylesheet" />
+@model ProductDataResponse
+@{
+    ViewBag.Title = "Perfume | Product Details";
+}
+<form asp-controller="Product" asp-action="CompletePurchase" asp-route-productId="@Model.ProductID">
+    <input type="hidden" name="ProductID" value="@Model.ProductID" />
 <div id="main-container">
     <div class="inner-container">
         <div class="left-side-image-container">
-            <img src="~/images/productimages/4_a2d7258c-3bde-4706-98f0-d716a33cf995_1000x.webp" />
+            <img src="@Model.ProductImagePath" />
         </div>
         <div class="left-side-text-container">
-            <h1>Eau De Parfum | Night (50ml)</h1>
-            <p>The spirited essence of a gentleman who is alluring, mysterious and charismatic.</p>
+            <h1>@Model.ProductName</h1>
+                <p>The spirited essence of a gentleman who is alluring, mysterious and charismatic. @Model.ProductDescription</p>
             <div>
-                <span class="MRP-container">MRP<h2>₹499</h2></span>
-                <span class="quantity-container">Quantity<input type="number" id="quantity" value="1" min="1" class="form-control" autocomplete="off"></span>
+                <span class="MRP-container">MRP<h2>₹@Model.Price</h2></span>
+                    <span class="quantity-container">Quantity<input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control" autocomplete="off"></span>
             </div>
             <button>Buy Now</button>
             <div class="ProductPoints">
-                <span><i class="bi bi-arrow-right">Long-lasting freshness</i></span>
+                <span><i class="bi bi-arrow-right">@Model.ProductDescription</i></span>
                 <span><i class="bi bi-arrow-right">Premium quality</i></span>
                 <span><i class="bi bi-arrow-right">Rich fragrance</i></span>
                 <span><i class="bi bi-arrow-right">Perfect for everyday use</i></span>
@@ -22,5 +28,5 @@
         </div>
     </div>
 </div>
-
+</form>
 <partial name="_CustomerFeedbackPartialView"></partial>
