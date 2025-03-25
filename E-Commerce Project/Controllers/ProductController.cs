@@ -208,7 +208,7 @@ namespace E_Commerce_Project.Controllers
             if (product == null)
             {
                 return NotFound(); // Or redirect to an error page
-            }
+            }  
 
             // Pass the product details to the view
             return View(product);
